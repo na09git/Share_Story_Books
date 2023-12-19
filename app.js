@@ -9,6 +9,8 @@ const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 const connectDB = require('./config/db')
+const multer = require('multer');
+
 
 // Load config
 dotenv.config({ path: './config/config.env' })
@@ -88,6 +90,7 @@ app.use(function (req, res, next) {
 })
 
 // Static folder
+// The express.static middleware should be placed before other middleware or route handlers that might need to handle specific routes. 
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Routes
@@ -95,7 +98,7 @@ app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
 app.use('/stories', require('./routes/stories'))
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 3000
 
 app.listen(
   PORT,

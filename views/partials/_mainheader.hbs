@@ -1,0 +1,75 @@
+<!--Bootstrap-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="px-5">
+            <a class="btn btn-info pl-3 center" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                aria-controls="offcanvasExample">
+
+                <img width="30" height="25" src="https://img.icons8.com/ios/50/000000/xbox-menu.png" alt="xbox-menu" />
+            </a>
+        </div>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Rajdhani:wght@300&display=swap"
+            rel="stylesheet">
+        <div class="mx-auto bg-secondary w-20 center" style="width: 200px;">
+            Share Your Event
+        </div>
+
+    </div>
+</nav>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <a href="#!" class="offcanvas-title text-decoration-none" id="offcanvasExampleLabel">Menus</a>
+    </div>
+    <div class="offcanvas-body">
+
+        <div class="col mt-3">
+
+            <table class="table table-hover" width="50px">
+                <tbody>
+                    <!---- 1 -->
+                    <tr>
+                        <td> <img width="40" height="40"
+                                src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/48/external-friends-user-tanah-basah-glyph-tanah-basah.png"
+                                alt="external-friends-user-tanah-basah-glyph-tanah-basah" />
+                            <a href="/stories" class="text-decoration-none"> Public Stories </a>
+                        </td>
+                    </tr>
+                    <!---- 2 -->
+                    <tr>
+                        <td> <img width="40" height="40" src="https://img.icons8.com/dotty/80/laptop-metrics--v3.png"
+                                alt="laptop-metrics--v3" />
+                            <a href="/dashboard" class="text-decoration-none">Dashboard</a>
+                        </td>
+                    </tr>
+                    <!---- 3 -->
+                    <tr>
+                        <td>
+                            <img width="35" height="35" src="https://img.icons8.com/ios/50/000000/exit--v1.png"
+                                alt="exit--v1" />
+                            <a href="/auth/logout" class="text-decoration-none">Logout</a>
+                        </td>
+                    </tr>
+                    <!-- Additional rows go here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- !-- bootstrap -- -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>

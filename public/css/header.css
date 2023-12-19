@@ -1,0 +1,58 @@
+.navbar-brand img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.collapse img {
+    width: 35px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.container-fluid {
+    position: sticky;
+    top: 100;
+    z-index: 99;
+
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.fa-angle-right {
+    float: right;
+}
+
+.no {
+    list-style-type: none;
+    padding-left: 6px;
+}
+
+.loginbtn {
+    background-color: #fff;
+    padding-right: 3px;
+    padding: 7px 17px;
+    border-radius: 20px;
+    color: #101C32;
+    transition: 0.4s ease-in-out;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 5px;
+    border: 1px solid red;
+}
+
+a {
+    text-decoration: none;
+
+}
+
+.loginbtn:hover {
+
+    color: #fff;
+    background: rgb(248, 47, 47);
+    transition: 0.3s ease;
+}

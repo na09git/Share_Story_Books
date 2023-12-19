@@ -1,33 +1,32 @@
-<h3>Add Story</h3>
+<h3 class="mt-4">Add Story</h3>
 <div class="row">
-    <form action="/stories" method="POST" class="col s12">
-        <div class="row">
-            <div class="input-field">
-                <input type="text" id="title" name="title">
-                <label for="title">Title</label>
-            </div>
+    <form action="/stories" method="POST" enctype="multipart/form-data" class="col-md-8 col-lg-6 col-xl-4 mx-auto">
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" class="form-control" id="image" name="image">
         </div>
 
-        <div class="row">
-            <div class="input-field">
-                <select id="status" name="status">
-                    <option value="public" selected>Public</option>
-                    <option value="private">Private</option>
-                </select>
-                <label for="status">Status</label>
-            </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title">
         </div>
 
-        <div class="row">
-            <div class="input-field">
-                <h5>Tell Us Your Story:</h5>
-                <textarea id="body" name="body"></textarea>
-            </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" name="status">
+                <option value="public" selected>Public</option>
+                <option value="private">Private</option>
+            </select>
         </div>
 
-        <div class="row">
-            <input type="submit" value="Save" class="btn">
-            <a href="/dashboard" class="btn orange">Cancel</a>
+        <div class="mb-3">
+            <label for="body" class="form-label">Tell Us Your Story</label>
+            <textarea class="form-control" id="body" name="body"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/dashboard" class="btn btn-warning">Cancel</a>
         </div>
     </form>
 </div>

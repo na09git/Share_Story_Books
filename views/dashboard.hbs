@@ -5,6 +5,7 @@
 <table class="striped">
     <thead>
         <tr>
+            <th>image</th>
             <th>Title</th>
             <th>Date</th>
             <th>Status</th>
@@ -14,6 +15,7 @@
     <tbody>
         {{#each stories}}
         <tr>
+            <td><a href="/stories/{{_id}}">{{image}}</a></td>
             <td><a href="/stories/{{_id}}">{{title}}</a></td>
             <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
             <td><span class="dash-status">{{status}}</span></td>

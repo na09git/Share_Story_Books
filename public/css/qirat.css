@@ -1,0 +1,26 @@
+.caption {
+    position: static;
+    width: 100%;
+    color: white;
+    justify-content: space-around;
+
+}
+
+/**** space-between not working****/
+.card-container {
+    justify-content: space-between;
+}
+
+h3 {
+    color: black;
+}
+
+img {
+    width: 295px;
+    height: 250px;
+    padding-top: 15px;
+}
+
+span {
+    padding-bottom: 15px;
+}
