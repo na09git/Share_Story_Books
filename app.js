@@ -63,11 +63,29 @@ app.engine(
       editIcon,
       select,
     },
+
     defaultLayout: 'main',
     extname: '.hbs',
   })
 )
 app.set('view engine', '.hbs')
+
+// home render
+
+app.get('/', function (req, res) {
+  res.render('home', { layout: false });
+});
+
+// Routes News
+app.get('/', (req, res) => {
+  res.render('news', { layout: false });
+});
+
+// Routes Contact _ Us Page
+app.get('/', (req, res) => {
+  res.render('contact', { layout: false });
+});
+
 
 // Sessions
 app.use(
@@ -92,11 +110,16 @@ app.use(function (req, res, next) {
 // Static folder
 // The express.static middleware should be placed before other middleware or route handlers that might need to handle specific routes. 
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'uploads')))
 
 // Routes
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
 app.use('/stories', require('./routes/stories'))
+app.use('/home', require('./routes/home'))
+app.use('/news', require('./routes/news'));
+app.use('/contact', require('./routes/contact'));
+
 
 const PORT = process.env.PORT || 3000
 

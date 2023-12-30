@@ -1,42 +1,36 @@
-<h1>Stories</h1>
-<ul class="search-form">
-    <li>
-        <form id="search-site" action='/stories/search/:query' method='get'>
-            <div class="input-group">
-                <i class="fas fa-search fa-large"></i>
-                <div class="input-field">
-                    <input id="search" type="search" name='query' placeholder="Search by title">
-                    <label class="label-icon" for="search">
-                    </label>
-                </div>
-                <button type="submit" class="input-group-addon btn">search</button>
-            </div>
+<h1 class="display-4" style=" padding-top:80px;">Events</h1>
+<form id="search-site" action='/stories/search/:query' method='get' class="mb-4">
+    <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-search fa-lg"></i></span>
+        <div class="form-floating">
+            <input id="search" type="search" name='query' class="form-control w-90" placeholder="Search by title">
+            <label for="search">Search</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
 
-        </form>
-    </li>
-</ul>
 <div class="row">
     {{#each stories}}
-    <div class="col s12 m4">
-        <div class="card">
-            <div class="card-image">
+    <div class="col-12 col-md-4">
+        <div class="card mb-4">
+            <div class="card-img-top">
                 {{{editIcon user ../user _id}}}
             </div>
-            <div class="card-content center-align">
-                <h5>{{title}}</h5>
-                <p>{{stripTags (truncate body 150)}}</p>
-                <br>
+            <div class="card-body text-center">
+                <h5 class="card-title">{{title}}</h5>
+                <p class="card-text">{{stripTags (truncate body 150)}}</p>
                 <div class="chip">
-                    <img src="{{user.image}}" alt="">
-                    <a href="/stories/user/{{user._id}}">{{user.displayName}}</a>
+                    <img src="{{user.image}}" alt="{{user.displayName}}" class="chip-img">
+                    <a href="/stories/user/{{user._id}}" class="chip-link">{{user.displayName}}</a>
                 </div>
             </div>
-            <div class="card-action center-align">
-                <a href="/stories/{{_id}}" class="btn grey">Read More</a>
+            <div class="card-footer text-center">
+                <a href="/stories/{{_id}}" class="btn btn-secondary">Read More</a>
             </div>
         </div>
     </div>
     {{else}}
-    <p>No stories to display</p>
+    <p class="col-12 text-center">No Event to display</p>
     {{/each}}
 </div>

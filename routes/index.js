@@ -4,9 +4,11 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
 const Story = require('../models/Story')
 
+
+
 // @desc    Login/Landing page
 // @route   GET /
-router.get('/', ensureGuest, (req, res) => {
+router.get('/login', ensureGuest, (req, res) => {
   res.render('login', {
     layout: 'login',
   })
@@ -28,13 +30,20 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
 })
 
 
-router.get('/index', ensureAuth, async (req, res) => {
+router.get('/home', (req, res) => {
   try {
-    const stories = await Story.find({ user: req.user.id }).lean()
-    res.render('index', {
-      name: req.user.firstName,
-      stories,
-    })
+    res.render('home')
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+})
+
+
+
+router.get('/contact', (req, res) => {
+  try {
+    res.render('contact')
   } catch (err) {
     console.error(err)
     res.render('error/500')

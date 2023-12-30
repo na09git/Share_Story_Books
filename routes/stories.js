@@ -1,8 +1,23 @@
 const express = require('express')
 const router = express.Router()
 const { ensureAuth } = require('../middleware/auth')
+const multer = require('multer');
 
 const Story = require('../models/Story')
+
+
+// image Upload // Set up multer storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads")
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + file.originalname + '-' + Date.now())
+  }
+})
+// Create multer instance
+const upload = multer({ storage: storage }).single('image')
+
 
 // @desc    Show add page
 // @route   GET /stories/add
@@ -10,11 +25,18 @@ router.get('/add', ensureAuth, (req, res) => {
   res.render('stories/add')
 })
 
+
 // @desc    Process add form
 // @route   POST /stories
-router.post('/', ensureAuth, async (req, res) => {
+router.post('/', ensureAuth, upload, async (req, res) => {
   try {
     req.body.user = req.user.id
+    if (req.file) {
+      req.body.image = {
+        data: req.file.buffer,
+        contentType: req.file.mimetype
+      }
+    }
     await Story.create(req.body)
     res.redirect('/dashboard')
   } catch (err) {
@@ -23,13 +45,14 @@ router.post('/', ensureAuth, async (req, res) => {
   }
 })
 
+
 // @desc    Show all stories
 // @route   GET /stories
 router.get('/', ensureAuth, async (req, res) => {
   try {
     const stories = await Story.find({ status: 'public' })
       .populate('user')
-      .sort({ createdAt: 'desc' })
+      .sort({ createdAt: 1 })
       .lean()
 
     res.render('stories/index', {
@@ -45,7 +68,9 @@ router.get('/', ensureAuth, async (req, res) => {
 // @route   GET /stories/:id
 router.get('/:id', ensureAuth, async (req, res) => {
   try {
-    let story = await Story.findById(req.params.id).populate('user').lean()
+    let story = await Story.findById(req.params.id)
+      .populate('user')
+      .lean()
 
     if (!story) {
       return res.render('error/404')

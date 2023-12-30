@@ -1,37 +1,22 @@
-<div class="w-75" style="position: fixed; z-index: 100; ">
-    {{> _homeheader}}
-</div>
-<div class="w-75" style="position: fixed;padding-top:80px; z-index: 100; ">
-    {{> _mainheader}}
-</div>
-{{> _add_btn}}
-
-
-<h6 style=" padding-top:80px;">Dashboard</h6>
+<h6 style=" padding-top:80px;"> Boardcast NEWS</h6>
 <h3>Welcome {{name}}</h3>
-<p>Here are your stories</p>
 
-{{#if stories}}
+{{#if news}}
 <table class="table table-striped w-100">
     <thead bg-secondary>
         <tr>
-            <th>No. </th>
             <th>Image </th>
             <th>Title</th>
             <th>Date</th>
-            <th>Status</th>
-            <th></th>
         </tr>
     </thead>
 
     <tbody>
-        {{#each stories as |row index|}}
+        {{#each news as |row index|}}
         <tr>
-            <td style="padding: 2px;">{{index}}</td>
             <td style="padding: 2px;"><img src="{{row.image}}" width="60" class="img-thumbnail"></td>
             <td style="padding: 2px;"><a href="/stories/{{row._id}}">{{row.title}}</a></td>
             <td style="padding: 2px;">{{formatDate row.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
-            <td style="padding: 2px;"><span class="dash-status">{{row.status}}</span></td>
             <td style="padding: 2px;">
                 <div style="display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr)">
                     <div>
@@ -57,5 +42,5 @@
 </table>
 
 {{else}}
-<p>You have not created any stories</p>
+<p>There is no News Broadcasted yet</p>
 {{/if}}

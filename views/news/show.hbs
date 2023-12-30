@@ -1,0 +1,8 @@
+<!-- views/news/show.hbs -->
+
+<div class="container mt-5">
+    <h1 class="display-3">{{news.title}}</h1>
+    <p class="lead">{{news.content}}</p>
+    <p class="text-muted">Created At: {{formatDate news.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</p>
+    <a href="/news/edit/{{news._id}}" class="btn btn-primary">Edit</a>
+</div>
