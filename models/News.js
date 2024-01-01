@@ -1,8 +1,11 @@
-// models/News.js
-
 const mongoose = require('mongoose');
+const multer = require('multer');
 
-const newsSchema = new mongoose.Schema({
+const NewsSchema = new mongoose.Schema({
+    image: {
+        data: Buffer, // Store the image data as a buffer
+        contentType: String, // Store the content type of the image
+    },
     title: {
         type: String,
         required: true,
@@ -17,4 +20,4 @@ const newsSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('News', newsSchema);
+module.exports = mongoose.model('News', NewsSchema);

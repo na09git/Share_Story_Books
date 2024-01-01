@@ -71,7 +71,6 @@ app.engine(
 app.set('view engine', '.hbs')
 
 // home render
-
 app.get('/', function (req, res) {
   res.render('home', { layout: false });
 });
@@ -86,6 +85,10 @@ app.get('/', (req, res) => {
   res.render('contact', { layout: false });
 });
 
+// Routes amirdetail Page
+app.get('/', (req, res) => {
+  res.render('amirdetail', { layout: false });
+});
 
 // Sessions
 app.use(
@@ -119,6 +122,7 @@ app.use('/stories', require('./routes/stories'))
 app.use('/home', require('./routes/home'))
 app.use('/news', require('./routes/news'));
 app.use('/contact', require('./routes/contact'));
+app.use('/amirdetail', require('./routes/amirdetail'));
 
 
 const PORT = process.env.PORT || 3000

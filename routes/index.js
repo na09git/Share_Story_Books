@@ -3,6 +3,7 @@ const router = express.Router()
 const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
 const Story = require('../models/Story')
+const News = require('../models/News')
 
 
 
@@ -39,11 +40,36 @@ router.get('/home', (req, res) => {
   }
 })
 
+// @desc    News
+// @route   GET /news
+router.get('/news', (req, res) => {
+  try {
+    res.render('news', {
+      name: req.user.firstName,
+      // news,
+    })
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+})
 
-
+// @desc    contact
+// @route   GET /contact
 router.get('/contact', (req, res) => {
   try {
     res.render('contact')
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+})
+
+// @desc    amirdetail
+// @route   GET /amirdetail
+router.get('/amirdetail', (req, res) => {
+  try {
+    res.render('amirdetail')
   } catch (err) {
     console.error(err)
     res.render('error/500')

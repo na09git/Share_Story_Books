@@ -1,7 +1,15 @@
 <!-- views/news/index.hbs -->
-<h1 class="display-4" style=" padding-top:80px;">Latest News</h1>
+<div class="w-75" style="position: fixed; z-index: 100; ">
+    {{> _homeheader}}
+</div>
 
-<form id="search-site" action='/stories/search/:query' method='get' class="mb-4">
+<div class="w-75" style="position: fixed; z-index: 100; padding-top:80px; ">
+    {{> _newsheader}}
+</div>
+
+<h1 class="display-4" style=" padding-top:160px;">Latest News</h1>
+
+<form id="search-site" action='/news/search/:query' method='get' class="mb-4">
     <div class="input-group">
         <span class="input-group-text"><i class="fas fa-search fa-lg"></i></span>
         <div class="form-floating">
@@ -20,7 +28,7 @@
 <div class="card mt-3">
     <div class="card-body">
         <h5 class="card-title">{{title}}</h5>
-        <p class="card-text">{{stripTags (truncate content 350)}}</p>
+        <p class="card-text">{{stripTags (truncate content 450)}}</p>
         <small class="text-muted">Posted by {{author}} on {{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</small>
     </div>
     {{#if isAdmin}}
@@ -28,11 +36,11 @@
         <a href="/news/edit/{{_id}}" class="btn btn-secondary">Edit</a>
         <a href="/news/delete/{{_id}}" class="btn btn-danger">Delete</a>
     </div>
-
+    {{/if}}
     <div class="card-footer text-center">
         <a href="/stories/{{_id}}" class="btn btn-secondary">Read More</a>
     </div>
-    {{/if}}
+
 </div>
 {{else}}
 <p class="col-12 text-center">No News yet Broadcasted , Stay tuned for a news update !</p>

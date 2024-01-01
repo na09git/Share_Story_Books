@@ -1,4 +1,10 @@
-<h1 class="display-4" style=" padding-top:80px;">Events</h1>
+<div class="w-100" style="position: fixed; z-index: 100; padding-left :10px; padding-right:160px;">
+    {{> _mainheader}}
+</div>
+<div>
+    {{> _add_btn}}
+</div>
+<h1 class="display-4 " style=" padding-top:80px; padding-bottom:20px; padding-left:30px;">Events</h1>
 <form id="search-site" action='/stories/search/:query' method='get' class="mb-4">
     <div class="input-group">
         <span class="input-group-text"><i class="fas fa-search fa-lg"></i></span>
@@ -10,7 +16,7 @@
     </div>
 </form>
 
-<div class="row">
+<div class="row" style="padding: 30px;">
     {{#each stories}}
     <div class="col-12 col-md-4">
         <div class="card mb-4">
@@ -20,9 +26,11 @@
             <div class="card-body text-center">
                 <h5 class="card-title">{{title}}</h5>
                 <p class="card-text">{{stripTags (truncate body 150)}}</p>
-                <div class="chip">
-                    <img src="{{user.image}}" alt="{{user.displayName}}" class="chip-img">
-                    <a href="/stories/user/{{user._id}}" class="chip-link">{{user.displayName}}</a>
+                <div class="chip gap-0 ">
+                    <img style="height: 35px; weight: 35px;" class="chip-img rounded" src="{{user.image}}"
+                        alt="{{user.displayName}}">
+                    <a style="text-decoration: none; background-color:#e9e0e0; border-radius:20px; padding-top:6px; padding-bottom:8px; padding-left:20px; padding-right:20px;"
+                        href="/stories/user/{{user._id}}" class="chip-link">{{user.displayName}}</a>
                 </div>
             </div>
             <div class="card-footer text-center">

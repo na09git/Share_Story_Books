@@ -1,5 +1,14 @@
-<h6 style=" padding-top:80px;"> Boardcast NEWS</h6>
-<h3>Welcome {{name}}</h3>
+<div class="w-75" style="position: fixed; z-index: 100;  ">
+    {{> _newsheader}}
+</div>
+<div>
+    {{> _create_btn}}
+</div>
+
+<h5 style=" padding-top:90px;"> Boardcasted News</h5>
+<h3>
+    <p>Welcome {{name}} </p>
+</h3>
 
 {{#if news}}
 <table class="table table-striped w-100">
@@ -15,17 +24,17 @@
         {{#each news as |row index|}}
         <tr>
             <td style="padding: 2px;"><img src="{{row.image}}" width="60" class="img-thumbnail"></td>
-            <td style="padding: 2px;"><a href="/stories/{{row._id}}">{{row.title}}</a></td>
+            <td style="padding: 2px;"><a href="/news/{{row._id}}">{{row.title}}</a></td>
             <td style="padding: 2px;">{{formatDate row.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
             <td style="padding: 2px;">
                 <div style="display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr)">
                     <div>
-                        <a href="/stories/edit/{{row._id}}" class="btn p-2 btn-float bg-warning">
+                        <a href="/news/edit/{{row._id}}" class="btn p-2 btn-float bg-warning">
                             <i class="fas fa-edit btn-float "></i>
                         </a>
                     </div>
                     <div>
-                        <form action="/stories/{{row._id}}" method="POST" id="delete-form">
+                        <form action="/news/{{row._id}}" method="POST" id="delete-form">
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="btn bg-danger">
                                 <i class="fas fa-trash"></i>

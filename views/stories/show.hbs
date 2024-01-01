@@ -1,3 +1,7 @@
+<div class="w-75" style="position: fixed; z-index: 100; ">
+    {{> _homeheader}}
+</div>
+
 <div class="row " style=" padding-top:85px; padding-bottom:20px;">
     <div class="col-12 col-md-8 w-50">
 
@@ -21,23 +25,20 @@
                 <div style="padding-top: 10px;">
                     <span class="card-title">{{story.user.displayName}}</span>
                 </div>
-                <div>
+                <div style="padding: 7px;">
                     <img src="{{story.user.image}}" class="rounded-circle img-fluid img-small"
-                        alt="{{story.user.displayName}}" style="padding: 25px;">
+                        alt="{{story.user.displayName}}" style="height: 150px; width: 150px;">
                 </div>
 
             </div>
+            <hr>
             <div class="card-action" style="padding-bottom: 13px;">
-
                 <button type="button" class="btn  btn-primary link-unstyled text-decoration-none"
                     style="background-color: #3498db; border-color: #3498db; "
                     onmouseover="this.style.backgroundColor='#2980b9'" onmouseout="this.style.backgroundColor='#3498db'"
                     onclick="window.location.href='/stories/user/{{story.user._id}}'">
                     More From {{story.user.firstName}}
                 </button>
-
-
-
             </div>
         </div>
     </div>

@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>JUMJ Website</title>
-    {{!-- image --}}
-    <link rel="icon" type="/favicon.ico" href="/images/favicon_io/jumj.png" border-radius="30px">
+    {{!-- favicon image --}}
+    <link rel="icon" type="/favicon.ico" href="/images/favicon_io/jumj.png" style="border-radius:5%;">
     {{!-- index css --}}
     <link rel="stylesheet" href="/css/home.css">
 
@@ -17,7 +17,8 @@
 
 </head>
 
-<body style="padding-left: 70px; padding-right: 70px;  padding-bottom: 10px;">
+<body style="padding-left: 50px; padding-right: 50px;  padding-bottom: 10px;">
+
     <section id="dvi1">
         {{> _homeheader}}
     </section>
@@ -54,24 +55,19 @@
 
 
     <!-- Back-to-Top Button -->
-    <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top"
-        style="background-color:#0debd8">
-        <i class="fa-solid fa-arrow-up"></i>
+    <button>
+        <img id="btn-back-to-top" src="https://img.icons8.com/color/48/circled-up-2--v1.png" alt="circled-up-2--v1" />
     </button>
 
     <!-- Back-to-Top Styles -->
     <style>
-        #btn-back-to-top i {
-            color: #3904f7;
-        }
-
         #btn-back-to-top {
             z-index: 1;
             position: fixed;
             bottom: 40px;
             right: 40px;
             width: 50px;
-            height: 50px;
+            height: 60px;
             border: none;
             border-radius: 50%;
         }
@@ -110,6 +106,8 @@
             document.documentElement.scrollTop = 0;
         }
     </script>
+
+
 
     <!-- Back to top button Starts -->
 
