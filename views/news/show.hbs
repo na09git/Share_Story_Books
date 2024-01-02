@@ -1,8 +1,46 @@
-<!-- views/news/show.hbs -->
+<div class="w-10" style="position: fixed; z-index: 100; ">
+    {{> _homeheader}}
+</div>
 
-<div class="container mt-5">
-    <h1 class="display-3">{{news.title}}</h1>
-    <p class="lead">{{news.content}}</p>
-    <p class="text-muted">Created At: {{formatDate news.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</p>
-    <a href="/news/edit/{{news._id}}" class="btn btn-primary">Edit</a>
+<div class="row w-100" style=" padding-top:85px; padding-bottom:20px; ">
+    <div class="col-12 col-md-8 w-57" style=" padding-right:30px;">
+
+        <h3 style="padding-left:40px;">{{news.title}}
+            <small>{{{editIcon1 news.user user news._id false}}}</small>
+        </h3>
+        <div class=" card story">
+            <div class="rounded">
+                <img src="{{news.image}}" alt="News Image">
+            </div>
+            <hr>
+            <div class="card-content">
+                <span class="card-title">{{formatDate date 'MMMM Do YYYY, h:mm:ss a'}}</span>
+                {{{news.body}}}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4 w-25" style="padding: 20px;">
+        <div class="card text-center">
+            <div class="card-content">
+                <div style="padding-top: 10px;">
+                    <span class="card-title">{{news.user.displayName}}</span>
+                </div>
+                <div style="padding: 7px;">
+                    <img src="{{news.user.image}}" class="rounded-circle img-fluid img-small"
+                        alt="{{news.user.displayName}}" style="height: 150px; width: 150px;">
+                </div>
+
+            </div>
+            <hr>
+            <div class="card-action" style="padding-bottom: 13px;">
+                <button type="button" class="btn  btn-primary link-unstyled text-decoration-none"
+                    style="background-color: #3498db; border-color: #3498db; "
+                    onmouseover="this.style.backgroundColor='#2980b9'" onmouseout="this.style.backgroundColor='#3498db'"
+                    onclick="window.location.href='/news/user/{{news.user._id}}'">
+                    More From {{news.user.firstName}}
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

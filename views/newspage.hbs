@@ -1,31 +1,35 @@
-<div class="w-75" style="position: fixed; z-index: 100;  ">
+<div class="w-100" style="position: fixed; z-index: 100; ">
     {{> _newsheader}}
 </div>
 <div>
     {{> _create_btn}}
 </div>
 
-<h5 style=" padding-top:90px;"> Boardcasted News</h5>
-<h3>
-    <p>Welcome {{name}} </p>
-</h3>
+
+<h6 style=" padding-top:80px;"> Boardcasted News</h6>
+<h3>Welcome {{name}}</h3>
 
 {{#if news}}
 <table class="table table-striped w-100">
     <thead bg-secondary>
         <tr>
+            <th>No. </th>
             <th>Image </th>
             <th>Title</th>
             <th>Date</th>
+            <th>Status</th>
+            <th></th>
         </tr>
     </thead>
 
     <tbody>
         {{#each news as |row index|}}
         <tr>
+            <td style="padding: 2px;">{{index}}</td>
             <td style="padding: 2px;"><img src="{{row.image}}" width="60" class="img-thumbnail"></td>
             <td style="padding: 2px;"><a href="/news/{{row._id}}">{{row.title}}</a></td>
             <td style="padding: 2px;">{{formatDate row.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
+            <td style="padding: 2px;"><span class="dash-status">{{row.status}}</span></td>
             <td style="padding: 2px;">
                 <div style="display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr)">
                     <div>
@@ -53,3 +57,7 @@
 {{else}}
 <p>There is no News Broadcasted yet</p>
 {{/if}}
+
+</body>
+
+</html>

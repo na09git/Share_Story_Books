@@ -1,34 +1,32 @@
-<div class="w-75" style="position: fixed; z-index: 1; padding-top:5px; ">
-    {{> _newsheader}}
-</div>
-<h3 class="mt-4" style="padding-top:80px; padding-left:60px;">Create News</h3>
+<h3 class="mt-4">Create News</h3>
 <div class="row">
     <form action="/news" method="POST" enctype="multipart/form-data">
-        <div class=" col-12 col-md-8 col-lg-6 col-xl-4 mx-auto">
+        <div class="mb-1 col-md-4 col-lg-6 col-xl-4 mx-auto">
             <label for="image" class="form-label">Upload Image</label>
             <input type="file" class="form-control" id="image" name="image">
         </div>
 
-        <div class=" col-12 col-md-8 col-lg-4 col-xl-8  mx-auto">
+        <div class="mb-1 col-md-4 col-lg-2 col-xl-4 mx-auto">
             <label for="title" class="form-label" required>Title</label>
             <input type="text" class="form-control" id="title" name="title">
         </div>
 
+        <div class="mb-1 col-md-4 col-lg-2 col-xl-4 mx-auto ">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" name="status">
+                <option value="public" selected>Public</option>
+                <option value="private">Private</option>
+            </select>
+        </div>
 
-        <div class=" col-12 col-md-8 col-lg-4 col-xl-8 mx-auto">
+        <div class="mb-1 col-md-4 col-lg-2 col-xl-6 mx-auto">
             <label for="body" class="form-label ">Tell Us Your Story</label>
             <textarea class="form-control " id="body" name="body"></textarea>
         </div>
 
-        <div class=" col-12 col-md-8 col-lg-4 col-xl-8 mx-auto" style="padding-top: 5px;">
+        <div class="mb-3 col-md-6 col-lg-2 col-xl-4 mx-auto">
             <button type="submit" class="btn btn-primary">Broadcast</button>
-            <a href="/news" class="btn btn-warning">Cancel</a>
+            <a href="/newspage" class="btn btn-warning">Cancel</a>
         </div>
     </form>
 </div>
-<style>
-    #body {
-        min-height: 100px;
-        height: 130px;
-    }
-</style>

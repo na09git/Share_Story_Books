@@ -1,14 +1,10 @@
-<!-- views/news/index.hbs -->
-<div class="w-75" style="position: fixed; z-index: 100; ">
-    {{> _homeheader}}
-</div>
-
-<div class="w-75" style="position: fixed; z-index: 100; padding-top:80px; ">
+<div class="w-100" style="position: fixed; z-index: 100; padding-left :10px; padding-right:160px;">
     {{> _newsheader}}
 </div>
-
-<h1 class="display-4" style=" padding-top:160px;">Latest News</h1>
-
+<div>
+    {{> _create_btn}}
+</div>
+<h1 class="display-4 " style=" padding-top:75px; padding-bottom:10px; padding-left:20px;">News</h1>
 <form id="search-site" action='/news/search/:query' method='get' class="mb-4">
     <div class="input-group">
         <span class="input-group-text"><i class="fas fa-search fa-lg"></i></span>
@@ -20,28 +16,29 @@
     </div>
 </form>
 
-{{!-- {{#if isAdmin}} --}}
-<a href="/news/create" class="btn btn-primary">Create News</a>
-{{!-- {{/if}} --}}
-
-{{#each news}}
-<div class="card mt-3">
-    <div class="card-body">
-        <h5 class="card-title">{{title}}</h5>
-        <p class="card-text">{{stripTags (truncate content 450)}}</p>
-        <small class="text-muted">Posted by {{author}} on {{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</small>
+<div class="row" style="padding: 30px;">
+    {{#each news}}
+    <div class="col-12 col-md-4">
+        <div class="card mb-4">
+            <div class="card-img-top">
+                {{{editIcon1 user ../user _id}}}
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">{{title}}</h5>
+                <p class="card-text">{{stripTags (truncate body 150)}}</p>
+                <div class="chip gap-0 ">
+                    <img style="height: 35px; weight: 35px;" class="chip-img rounded" src="{{user.image}}"
+                        alt="{{user.displayName}}">
+                    <a style="text-decoration: none; background-color:#e9e0e0; border-radius:20px; padding-top:6px; padding-bottom:8px; padding-left:20px; padding-right:20px;"
+                        href="/mews/user/{{user._id}}" class="chip-link">{{user.displayName}}</a>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a href="/news/{{_id}}" class="btn btn-secondary">Read More</a>
+            </div>
+        </div>
     </div>
-    {{#if isAdmin}}
-    <div class="card-footer">
-        <a href="/news/edit/{{_id}}" class="btn btn-secondary">Edit</a>
-        <a href="/news/delete/{{_id}}" class="btn btn-danger">Delete</a>
-    </div>
-    {{/if}}
-    <div class="card-footer text-center">
-        <a href="/stories/{{_id}}" class="btn btn-secondary">Read More</a>
-    </div>
-
+    {{else}}
+    <p class="col-12 text-center">No News to display</p>
+    {{/each}}
 </div>
-{{else}}
-<p class="col-12 text-center">No News yet Broadcasted , Stay tuned for a news update !</p>
-{{/each}}

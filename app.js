@@ -49,6 +49,7 @@ const {
   stripTags,
   truncate,
   editIcon,
+  editIcon1,
   select,
 } = require('./helpers/hbs')
 
@@ -61,6 +62,7 @@ app.engine(
       stripTags,
       truncate,
       editIcon,
+      editIcon1,
       select,
     },
 
@@ -77,7 +79,7 @@ app.get('/', function (req, res) {
 
 // Routes News
 app.get('/', (req, res) => {
-  res.render('news', { layout: false });
+  res.render('newspage', { layout: false });
 });
 
 // Routes Contact _ Us Page
@@ -114,15 +116,17 @@ app.use(function (req, res, next) {
 // The express.static middleware should be placed before other middleware or route handlers that might need to handle specific routes. 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'uploads')))
+app.use(express.static(path.join(__dirname, 'uploadsnews')))
 
 // Routes
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
 app.use('/stories', require('./routes/stories'))
-app.use('/home', require('./routes/home'))
 app.use('/news', require('./routes/news'));
+app.use('/home', require('./routes/home'))
 app.use('/contact', require('./routes/contact'));
 app.use('/amirdetail', require('./routes/amirdetail'));
+app.use('/student', require('./routes/student'));
 
 
 const PORT = process.env.PORT || 3000

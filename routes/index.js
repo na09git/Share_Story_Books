@@ -30,6 +30,20 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
   }
 })
 
+// @desc    News
+// @route   GET /news
+router.get('/newspage', ensureAuth, async (req, res) => {
+  try {
+    const news = await News.find({ user: req.user.id }).lean()
+    res.render('newspage', {
+      name: req.user.firstName,
+      news,
+    })
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+})
 
 router.get('/home', (req, res) => {
   try {
@@ -40,19 +54,6 @@ router.get('/home', (req, res) => {
   }
 })
 
-// @desc    News
-// @route   GET /news
-router.get('/news', (req, res) => {
-  try {
-    res.render('news', {
-      name: req.user.firstName,
-      // news,
-    })
-  } catch (err) {
-    console.error(err)
-    res.render('error/500')
-  }
-})
 
 // @desc    contact
 // @route   GET /contact

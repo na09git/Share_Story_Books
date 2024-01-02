@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { ensureAuth } = require('../middleware/auth')
 const multer = require('multer');
+const mongoose = require('mongoose');
 
 const Story = require('../models/Story')
 

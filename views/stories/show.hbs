@@ -1,25 +1,26 @@
-<div class="w-75" style="position: fixed; z-index: 100; ">
+<div class="w-10" style="position: fixed; z-index: 100; ">
     {{> _homeheader}}
 </div>
 
-<div class="row " style=" padding-top:85px; padding-bottom:20px;">
-    <div class="col-12 col-md-8 w-50">
+<div class="row w-100" style=" padding-top:85px; padding-bottom:20px; ">
+    <div class="col-12 col-md-8 w-57" style=" padding-right:30px;">
 
-        <h3>{{story.title}}
-            <small>{{{editIcon story.user user story._id false}}}</small>
+        <h3 style="padding-left:40px;">{{story.title}}
+            <small>{{{editIcon1 story.user user story._id false}}}</small>
         </h3>
-        <div class="card story">
+        <div class=" card story">
             <div class="rounded">
-                <img src="{{story.image}}" alt="Story Image">
+                <img src="{{story.image}}" alt="News Image">
             </div>
-
+            <hr>
             <div class="card-content">
                 <span class="card-title">{{formatDate date 'MMMM Do YYYY, h:mm:ss a'}}</span>
                 {{{story.body}}}
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-4">
+
+    <div class="col-12 col-md-4 w-25" style="padding: 20px;">
         <div class="card text-center">
             <div class="card-content">
                 <div style="padding-top: 10px;">
@@ -36,7 +37,7 @@
                 <button type="button" class="btn  btn-primary link-unstyled text-decoration-none"
                     style="background-color: #3498db; border-color: #3498db; "
                     onmouseover="this.style.backgroundColor='#2980b9'" onmouseout="this.style.backgroundColor='#3498db'"
-                    onclick="window.location.href='/stories/user/{{story.user._id}}'">
+                    onclick="window.location.href='/news/user/{{story.user._id}}'">
                     More From {{story.user.firstName}}
                 </button>
             </div>

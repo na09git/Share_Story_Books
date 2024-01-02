@@ -2,14 +2,70 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-<nav class="navbar bg-tertiary" style="padding-top: 7px; position:relative;">
-    <div class="container-fluid center w-100">
-        <div class=" btn bg-info  w-100 ">
-            <h3 style="color: antiquewhite;  "> News </h3>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="px-5">
+            <a class="btn btn-info pl-3 center" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                aria-controls="offcanvasExample">
+                <img width="30" height="25" src="https://img.icons8.com/ios/50/000000/xbox-menu.png" alt="xbox-menu" />
+            </a>
         </div>
+
+        <div>
+            <div class=" btn bg-info  " style="padding-left: 40px; padding-right: 40px;">
+                <p style="color: antiquewhite;"> News</p>
+            </div>
+        </div>
+
+        <div class="px-5">
+            <a class="btn btn-info pl-3 center" href="/">
+                HOME
+            </a>
+        </div>
+
 
     </div>
 </nav>
+
+<div class="offcanvas sidenav offcanvas-start" tabindex="-1" id="offcanvasExample"
+    aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <a href="#!" class="offcanvas-title text-decoration-none" id="offcanvasExampleLabel">Menus</a>
+        <button type="button" class="btn-close float-end" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="col mt-3">
+            <table class="table table-hover" width="50px">
+                <tbody>
+                    <!-- 1 -->
+                    <tr>
+                        <td>
+                            <img width="40" height="40"
+                                src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/48/external-friends-user-tanah-basah-glyph-tanah-basah.png"
+                                alt="external-friends-user-tanah-basah-glyph-tanah-basah" />
+                            <a href="/news" class="text-decoration-none"> Public Stories </a>
+                        </td>
+                    </tr>
+                    <!-- 2 -->
+                    <tr>
+                        <td>
+                            <img width="40" height="40" src="https://img.icons8.com/dotty/80/laptop-metrics--v3.png"
+                                alt="laptop-metrics--v3" />
+                            <a href="/newspage" class="text-decoration-none">Dashboard</a>
+                        </td>
+                    </tr>
+                    <!-- 3 -->
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
