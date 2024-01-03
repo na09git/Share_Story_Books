@@ -4,6 +4,7 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
 const Story = require('../models/Story')
 const News = require('../models/News')
+const Student = require('../models/Student')
 
 
 
@@ -66,6 +67,19 @@ router.get('/contact', (req, res) => {
   }
 })
 
+
+// @desc    student
+// @route   GET /student
+router.get('/student', (req, res) => {
+  try {
+    res.render('student')
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+})
+
+
 // @desc    amirdetail
 // @route   GET /amirdetail
 router.get('/amirdetail', (req, res) => {
@@ -76,7 +90,6 @@ router.get('/amirdetail', (req, res) => {
     res.render('error/500')
   }
 })
-
 
 
 module.exports = router

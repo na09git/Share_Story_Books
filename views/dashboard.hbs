@@ -1,11 +1,6 @@
 <title>Event Page</title>
 
-<div class="w-75" style="position: fixed; z-index: 100; ">
-    {{> _homeheader}}
-</div>
-
-
-<div class="w-75" style="position: fixed;padding-top:80px; z-index: 100; ">
+<div class="w-100" style="position: fixed;padding-top:8px; z-index: 100; padding-right:190px; ">
     {{> _mainheader}}
 </div>
 <div>
@@ -13,20 +8,20 @@
 </div>
 
 
-<h6 style=" padding-top:80px;">Dashboard</h6>
-<h3>Welcome {{name}}</h3>
+<h6 style=" padding-top:90px;">Dashboard</h6>
+<h3 style="padding-left: 40px;">Welcome {{name}}</h3>
 <p>Here are your stories</p>
 
 {{#if stories}}
 <table class="table table-striped w-100">
-    <thead bg-secondary>
+    <thead class="bg-secondary">
         <tr>
             <th>No. </th>
             <th>Image </th>
             <th>Title</th>
             <th>Date</th>
             <th>Status</th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
 

@@ -1,0 +1,31 @@
+{{> _studentheader}}
+<h3 class="mt-4" style="padding-left: 40px;">Add Student</h3>
+<div class="row p-4 ">
+    <form action="/student" method="POST" enctype="multipart/form-data">
+
+        <div class="mb-1 col-md-4 col-lg-2 col-xl-4 mx-auto">
+            <label for="title" class="form-label" required>Name</label>
+            <input type="text" class="form-control" id="title" name="name" placeholder="Enter name">
+        </div>
+
+        <div class="mb-1 col-md-4 col-lg-2 col-xl-4 mx-auto ">
+            <label for="status" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+        </div>
+
+        <div class="mb-1 col-md-4 col-lg-2 col-xl-4 mx-auto">
+            <label for="phone" class="form-label ">Phone</label>
+            <input type="tel" class="form-control " id="phone" name="phone" placeholder="Enter phone">
+        </div>
+
+        <div class="mb-1 col-md-4 col-lg-6 col-xl-4 mx-auto">
+            <label for="image" class="form-label">Select Image</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+
+        <div class="mb-3 col-md-6 col-lg-2 col-xl-4 mx-auto" style="padding-top: 10px;">
+            <button type="submit" class="btn btn-primary">Add </button>
+            <a href="/student" class="btn btn-warning">Cancel</a>
+        </div>
+    </form>
+</div>

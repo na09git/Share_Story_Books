@@ -1,0 +1,29 @@
+<h1 class="display-4 " style=" padding-top:80px; padding-bottom:20px; padding-left:30px;">Events</h1>
+
+
+<div class="row" style="padding: 30px;">
+    {{#each student}}
+    <div class="col-12 col-md-4">
+        <div class="card mb-4">
+            <div class="card-img-top">
+                {{{editIcon user ../user _id}}}
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">{{title}}</h5>
+                <p class="card-text">{{stripTags (truncate body 150)}}</p>
+                <div class="chip gap-0 ">
+                    <img style="height: 35px; weight: 35px;" class="chip-img rounded" src="{{user.image}}"
+                        alt="{{user.displayName}}">
+                    <a style="text-decoration: none; background-color:#e9e0e0; border-radius:20px; padding-top:6px; padding-bottom:8px; padding-left:20px; padding-right:20px;"
+                        href="/stories/user/{{user._id}}" class="chip-link">{{user.displayName}}</a>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a href="/stories/{{_id}}" class="btn btn-secondary">Read More</a>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <p class="col-12 text-center">No Event to display</p>
+    {{/each}}
+</div>

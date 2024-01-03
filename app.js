@@ -79,17 +79,22 @@ app.get('/', function (req, res) {
 
 // Routes News
 app.get('/', (req, res) => {
-  res.render('newspage', { layout: false });
+  res.render('newspage', { title: "News Page" }, { layout: false });
 });
 
 // Routes Contact _ Us Page
 app.get('/', (req, res) => {
-  res.render('contact', { layout: false });
+  res.render('contact', { title: "Contact Page" }, { layout: false });
 });
 
 // Routes amirdetail Page
 app.get('/', (req, res) => {
-  res.render('amirdetail', { layout: false });
+  res.render('amirdetail', { title: "Jema'a Amir" }, { layout: false });
+});
+
+// Routes student Page
+app.get('/', (req, res) => {
+  res.render('student', { title: "Student Page" }, { layout: false });
 });
 
 // Sessions

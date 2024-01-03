@@ -16,10 +16,13 @@ const StudentSchema = new mongoose.Schema({
         type: String,
     },
     image: {
-        type: String,
-        required: true,
+        data: {
+            type: Buffer,
+        },
+        contentType: {
+            type: String,
+        },
     },
-
     createdAt: {
         type: Date,
         default: Date.now,
