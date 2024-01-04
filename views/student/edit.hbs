@@ -1,40 +1,45 @@
 <div class="container mt-5">
-    <h3>Edit your Event</h3>
+    <h3>Edit Student Information</h3>
     <div class="row" style="padding-left: 80px;">
-        <form action="/stories/{{story._id}}" method="POST" class="col-md-8 col-lg-6">
+        <form action="/student/{{student._id}}" method="POST" class="col-md-8 col-lg-6">
             <input type="hidden" name="_method" value="PUT">
             <!-- 1 image--->
             <div class="mb-3">
-                <label for="image" class="form-label">Change Image</label>
-                <input type="file" class="form-control" id="image" name="image" value="{{story.image}}">
-            </div>
+                <label for="name" class="form-label"> Name :</label>
+                <input type="text" class="form-control" id="title" name="name" value="{{student.name}}">
 
-            <!-- 2 title--->
+            </div>
+            <!-- 2 Email--->
             <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="title" value="{{story.title}}">
+                <label for="title" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{student.email}}">
+            </div>
+            <!-- 3 Phone --->
+            <div class="mb-3">
+                <label for="title" class="form-label">Phone</label>
+                <input type="tel" class="form-control " id="phone" name="phone" value="{{student.phone}}">
             </div>
 
-            <!-- 3 status --->
+            <!-- 4 status --->
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status">
-                    {{#select story.status}}
-                    <option value="public" selected>Public</option>
-                    <option value="private">Private</option>
+                    {{#select student.status}}
+                    <option value="Paid" selected>Paid</option>
+                    <option value="Not-Paid">Not-Paid</option>
                     {{/select}}
                 </select>
             </div>
 
-            <!-- 4 body--->
+            <!-- 5 Image--->
             <div class="mb-3">
-                <label for="body" class="form-label">Tell Us Your Story:</label>
-                <textarea class="form-control" id="body" name="body">{{story.body}}</textarea>
+                <label for="image" class="form-label">Change Image</label>
+                <input type="file" class="form-control" id="image" name="image" value="{{student.image}}">
             </div>
-
+            <!-- 5 Action--->
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary">
-                <a href="/dashboard" class="btn btn-warning">Cancel</a>
+                <a href="/student" class="btn btn-warning">Cancel</a>
             </div>
         </form>
     </div>

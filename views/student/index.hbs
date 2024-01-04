@@ -1,5 +1,18 @@
-<h1 class="display-4 " style=" padding-top:80px; padding-bottom:20px; padding-left:30px;">Events</h1>
+<div class="w-100" style="position: fixed; z-index: 100; padding-left :10px; padding-right:160px;">
+    {{> _studentheader}}
+</div>
 
+<h1 class="display-4 " style=" padding-top:80px; padding-bottom:20px; padding-left:30px;">Students</h1>
+<form id="search-site" action='/student/search/:query' method='get' class="mb-4">
+    <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-search fa-lg"></i></span>
+        <div class="form-floating">
+            <input id="search" type="search" name='query' class="form-control w-90" placeholder="Search by title">
+            <label for="search">Search</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
 
 <div class="row" style="padding: 30px;">
     {{#each student}}
@@ -9,17 +22,20 @@
                 {{{editIcon user ../user _id}}}
             </div>
             <div class="card-body text-center">
-                <h5 class="card-title">{{title}}</h5>
-                <p class="card-text">{{stripTags (truncate body 150)}}</p>
+                <h5 class="card-title">{{student.name}}</h5>
+                <h5 class="card-title">{{student.email}}</h5>
+                <h5 class="card-title">{{student.phone}}</h5>
+                <h5 class="card-title">{{student.status}}</h5>
+
                 <div class="chip gap-0 ">
-                    <img style="height: 35px; weight: 35px;" class="chip-img rounded" src="{{user.image}}"
-                        alt="{{user.displayName}}">
+                    <img style="height: 35px; weight: 35px;" class="chip-img rounded" src="{{student.image}}"
+                        alt="{{student.name}}">
                     <a style="text-decoration: none; background-color:#e9e0e0; border-radius:20px; padding-top:6px; padding-bottom:8px; padding-left:20px; padding-right:20px;"
-                        href="/stories/user/{{user._id}}" class="chip-link">{{user.displayName}}</a>
+                        href="/student/user/{{user._id}}" class="chip-link">{{student.displayName}}</a>
                 </div>
             </div>
             <div class="card-footer text-center">
-                <a href="/stories/{{_id}}" class="btn btn-secondary">Read More</a>
+                <a href="/student/{{_id}}" class="btn btn-secondary">Read More</a>
             </div>
         </div>
     </div>

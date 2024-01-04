@@ -1,4 +1,4 @@
-<div class="w-100" style="position: fixed; z-index: 100; ">
+<div class="w-100" style="position: fixed; z-index: 100; padding-right:200px;">
     {{> _newsheader}}
 </div>
 <div>
@@ -7,18 +7,18 @@
 
 
 <h6 style=" padding-top:80px;"> Boardcasted News</h6>
-<h3>Welcome {{name}}</h3>
+<h3 style="padding-left:50px;">Welcome {{name}}</h3>
 
 {{#if news}}
 <table class="table table-striped w-100">
-    <thead bg-secondary>
+    <thead class="bg-secondary">
         <tr>
             <th>No. </th>
             <th>Image </th>
             <th>Title</th>
             <th>Date</th>
             <th>Status</th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
 
@@ -57,7 +57,3 @@
 {{else}}
 <p>There is no News Broadcasted yet</p>
 {{/if}}
-
-</body>
-
-</html>

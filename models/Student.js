@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose')
 
 const StudentSchema = new mongoose.Schema({
@@ -15,6 +14,11 @@ const StudentSchema = new mongoose.Schema({
     phone: {
         type: String,
     },
+    status: {
+        type: String,
+        default: 'Paid',
+        enum: ['Paid', 'Not-Paid'],
+    },
     image: {
         data: {
             type: Buffer,
@@ -23,11 +27,14 @@ const StudentSchema = new mongoose.Schema({
             type: String,
         },
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
     createdAt: {
         type: Date,
         default: Date.now,
     },
-
 })
 
 module.exports = mongoose.model('Student', StudentSchema)

@@ -65,6 +65,7 @@ router.get('/', ensureAuth, async (req, res) => {
     }
 })
 
+
 // @desc    Show single news
 // @route   GET /news/:id
 router.get('/:id', ensureAuth, async (req, res) => {
@@ -115,6 +116,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
     }
 })
 
+
 // @desc    Update news
 // @route   PUT /news/:id
 router.put('/:id', ensureAuth, async (req, res) => {
@@ -141,6 +143,7 @@ router.put('/:id', ensureAuth, async (req, res) => {
     }
 })
 
+
 // @desc    Delete news
 // @route   DELETE /news/:id
 router.delete('/:id', ensureAuth, async (req, res) => {
@@ -163,7 +166,8 @@ router.delete('/:id', ensureAuth, async (req, res) => {
     }
 })
 
-// @desc    User nwes
+
+// @desc    User news
 // @route   GET /news/user/:userId
 router.get('/user/:userId', ensureAuth, async (req, res) => {
     try {

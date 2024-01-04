@@ -92,10 +92,11 @@ app.get('/', (req, res) => {
   res.render('amirdetail', { title: "Jema'a Amir" }, { layout: false });
 });
 
-// Routes student Page
+// Routes students Page
 app.get('/', (req, res) => {
   res.render('student', { title: "Student Page" }, { layout: false });
 });
+
 
 // Sessions
 app.use(

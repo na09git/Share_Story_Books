@@ -16,6 +16,7 @@ router.get('/login', ensureGuest, (req, res) => {
   })
 })
 
+
 // @desc    Dashboard
 // @route   GET /dashboard
 router.get('/dashboard', ensureAuth, async (req, res) => {
@@ -68,11 +69,15 @@ router.get('/contact', (req, res) => {
 })
 
 
-// @desc    student
-// @route   GET /student
-router.get('/student', (req, res) => {
+// @desc    News
+// @route   GET /news
+router.get('/student', ensureAuth, async (req, res) => {
   try {
-    res.render('student')
+    const student = await Student.find({ user: req.user.id }).lean()
+    res.render('student', {
+      name: req.user.firstName,
+      student,
+    })
   } catch (err) {
     console.error(err)
     res.render('error/500')
