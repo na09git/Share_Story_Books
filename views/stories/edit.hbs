@@ -3,7 +3,7 @@
     <div class="row" style="padding-left: 80px;">
         <form action="/stories/{{story._id}}" method="POST" class="col-md-8 col-lg-6">
             <input type="hidden" name="_method" value="PUT">
-            <!-- 1 image--->
+            <!-- 1 Name --->
             <div class="mb-3">
                 <label for="image" class="form-label">Change Image</label>
                 <input type="file" class="form-control" id="image" name="image" value="{{story.image}}">

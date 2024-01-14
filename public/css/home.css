@@ -34,6 +34,11 @@
     padding-top: 20px;
 }
 
+#div7 {
+    position: relative;
+    padding-top: 20px;
+}
+
 #div8 {
     position: relative;
     padding-top: 20px;
@@ -41,10 +46,20 @@
 
 #div9 {
     position: relative;
-    padding-top: 500px;
+    padding-top: 10px;
 }
 
 #div10 {
+    position: relative;
+    padding-top: 500px;
+}
+
+#div11 {
+    position: relative;
+    padding-top: 30px;
+}
+
+#div12 {
     position: relative;
     padding-top: 10px;
 }

@@ -5,6 +5,8 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth')
 const Story = require('../models/Story')
 const News = require('../models/News')
 const Student = require('../models/Student')
+const Problem = require('../models/Problem')
+const Worker = require('../models/Worker')
 
 
 
@@ -69,14 +71,46 @@ router.get('/contact', (req, res) => {
 })
 
 
-// @desc    News
-// @route   GET /news
+// @desc    Student
+// @route   GET /student
 router.get('/student', ensureAuth, async (req, res) => {
   try {
     const student = await Student.find({ user: req.user.id }).lean()
     res.render('student', {
       name: req.user.firstName,
       student,
+    })
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+})
+
+
+// @desc    Worker
+// @route   GET /worker
+router.get('/worker', ensureAuth, async (req, res) => {
+  try {
+    const worker = await Worker.find({ user: req.user.id }).lean()
+    res.render('worker', {
+      name: req.user.firstName,
+      worker,
+    })
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+})
+
+
+// @desc    Problem
+// @route   GET /problem
+router.get('/problempage', ensureAuth, async (req, res) => {
+  try {
+    const problem = await Problem.find({ user: req.user.id }).lean()
+    res.render('problempage', {
+      name: req.user.firstName,
+      problem,
     })
   } catch (err) {
     console.error(err)

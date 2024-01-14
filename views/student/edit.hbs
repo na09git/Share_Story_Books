@@ -1,42 +1,60 @@
-<div class="container mt-5">
-    <h3>Edit Student Information</h3>
-    <div class="row" style="padding-left: 80px;">
-        <form action="/student/{{student._id}}" method="POST" class="col-md-8 col-lg-6">
+<div class="w-100" style="position: fixed; z-index: 100;">
+    {{> _studentheader}}
+</div>
+<div class="container row" style="padding-top: 90px;">
+    <div class="col">
+        <h3 style="padding-left: 40px;">Edit Student Information</h3>
+
+    </div>
+    <div class="row col" style="padding-left: 10px;">
+        <form action="/student/edit/{{student._id}}" method="POST" enctype="multipart/form-data"
+            class="col-md-8 col-lg-8">
             <input type="hidden" name="_method" value="PUT">
             <!-- 1 image--->
             <div class="mb-3">
                 <label for="name" class="form-label"> Name :</label>
-                <input type="text" class="form-control" id="title" name="name" value="{{student.name}}">
+                <input type="text" class="form-control" id="name" name="name" value="{{student.name}}">
 
             </div>
             <!-- 2 Email--->
             <div class="mb-3">
-                <label for="title" class="form-label">Email</label>
+                <label for="email" class="form-label">Email :</label>
                 <input type="email" class="form-control" id="email" name="email" value="{{student.email}}">
             </div>
             <!-- 3 Phone --->
             <div class="mb-3">
-                <label for="title" class="form-label">Phone</label>
+                <label for="phone" class="form-label">Phone :</label>
                 <input type="tel" class="form-control " id="phone" name="phone" value="{{student.phone}}">
             </div>
 
             <!-- 4 status --->
             <div class="mb-3">
-                <label for="status" class="form-label">Status</label>
+                <label for="status" class="form-label">Status :</label>
+
                 <select class="form-select" id="status" name="status">
-                    {{#select student.status}}
-                    <option value="Paid" selected>Paid</option>
-                    <option value="Not-Paid">Not-Paid</option>
-                    {{/select}}
+                    <option value="Paid" {{#if (eq student.status 'Paid' )}}selected{{/if}}>Paid</option>
+                    <option value="Not-Paid" {{#if (eq student.status 'Not-Paid' )}}selected{{/if}}>Not-Paid</option>
                 </select>
             </div>
-
-            <!-- 5 Image--->
+            <!-- 5 gender --->
             <div class="mb-3">
-                <label for="image" class="form-label">Change Image</label>
-                <input type="file" class="form-control" id="image" name="image" value="{{student.image}}">
+                <label for="gender" class="form-label">Gender :</label>
+
+                <select class="form-select" id="gender" name="gender">
+                    <option value="M" {{#if (eq student.gender 'M' )}}selected{{/if}}>M</option>
+                    <option value="F" {{#if (eq student.gender 'F' )}}selected{{/if}}>F</option>
+                </select>
             </div>
-            <!-- 5 Action--->
+            <!-- 6 Image--->
+            <div class="mb-3">
+                <label for="image" class="form-label">Change Image :</label>
+                <input type="file" class="form-control" id="image" name="image"
+                    src='data:{{row.contentType}};base64,{{row.imageBase64}}'>
+                {{#if student.image}}
+                <img src='data:{{student.contentType}};base64,{{student.imageBase64}}' alt="{{student.name}}">
+                {{/if}}
+            </div>
+            <!-- 7 Action--->
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary">
                 <a href="/student" class="btn btn-warning">Cancel</a>

@@ -5,115 +5,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jumj Page</title>
+
+    <!-- Bootstrap link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css"
+        integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/header.css">
 </head>
 
-<link rel="stylesheet" href="/css/header.css">
-<!---************nav ends**********--->
-<!--Bootstrap  link-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css"
-    integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top bg-white d-block p-2 text-bg-info responsive">
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-white p-2 text-bg-info">
 
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                <img class="jumj-image" src="/images/favicon_io/jumj.png">
-            </a>
+            <div>
+                <a class="navbar-brand" href="/">
+                    <img class="jumj_image" src="/images/favicon_io/jumj12.png">
+                </a>
+            </div>
 
-            <div class="collapse  justify-content-center navbar-collapse" id="navbarSupportedContent">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                    <!--- Home  --->
-                    <a class="icon-link icon-link-hover nav-link  active" style="text-decoration: none;"
-                        aria-current="page" href="/">
-                        <span class="text-success bg-light p-1 rounded">
-                            <i class="fas fa-home me-1"></i>
-                            Home
-                        </span>
-                    </a>
+                    <!-- Home -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" style="padding: 5px; text-decoration:none;">
+                            <span class="text-success bg-light p-1 rounded">
+                                <i class="fas fa-home me-1"></i>
+                                Home
+                            </span>
+                        </a>
+                    </li>
 
-                    <!---   Campus  --->
+                    <!-- Campus -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link   dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false" href="" style="text-decoration: none;">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false" href="#" style="padding: 5px; text-decoration:none;">
                             <span class="text-success bg-light p-1 rounded">
                                 <i class="fas fa-university me-1"></i>
                                 Campus
                             </span>
                         </a>
                         <ul class="dropdown-menu">
-
                             <li class="dropdown-item">
                                 <a class="text-info" href="/pages/Main-Health.html">Main-Health</a>
-                                <i class="fa fa-angle-right"></i>
-
                             </li>
-
                             <li class="dropdown-item">
                                 <a class="text-info" href="/pages/Jit.html">Jit</a>
-                                <i class="fa fa-angle-right"></i>
-
                             </li>
-
                             <li class="dropdown-item">
                                 <a class="text-info" href="/pages/Agri.html">Agri</a>
-                                <i class="fa fa-angle-right"></i>
-
                             </li>
-
                             <li class="dropdown-item">
                                 <a class="text-info" href="/pages/Beco.html">Beco</a>
-                                <i class="fa fa-angle-right"></i>
                             </li>
-
                         </ul>
                     </li>
 
-                    <!--- Irshad  --->
-                    <li class="nav-item dropdown" data-bs-theme="blue">
-                        <a class="nav-link icon-link-hover nav-link dropdown-toggle" role="button"
-                            style=" text-decoration: none;" data-bs-toggle="dropdown" aria-expanded="false" href="">
+                    <!-- Irshad -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false" href="#" style="padding: 5px; text-decoration:none;">
                             <span class="text-success bg-light p-1 rounded">
                                 <i class="fas fa-book me-1"></i>
                                 Irshad
                             </span>
                         </a>
                         <ul class="dropdown-menu">
-
                             <li class="dropdown-item">
                                 <a class="text-info" href="/Main-Health.html">JUMJ</a>
-                                <i class="fa fa-angle-right"></i>
-
                             </li>
-
                             <li class="dropdown-item">
                                 <a class="text-info" href="/Jit.html">KJUMJ</a>
-                                <i class="fa fa-angle-right"></i>
-
                             </li>
-
                             <li class="dropdown-item">
                                 <a class="text-info" href="/Agri.html">AgriJUMJ</a>
-                                <i class="fa fa-angle-right"></i>
-
                             </li>
-
                             <li class="dropdown-item">
                                 <a class="text-info" href="/Beco.html">BecoJUMJ</a>
-                                <i class="fa fa-angle-right"></i>
                             </li>
-
                         </ul>
                     </li>
 
-                    <!--- Events   --->
-                    <li class="nav-item " data-bs-theme="blue">
-                        <a class="icon-link icon-link-hover nav-link" style="text-decoration: none;" href="/login">
+                    <!-- Events -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/stories" style="padding: 5px; text-decoration:none;">
                             <span class="text-success bg-light p-1 rounded">
                                 <i class="fas fa-calendar-alt me-1"></i>
                                 Events
@@ -121,10 +107,9 @@
                         </a>
                     </li>
 
-                    <!--- Contact   --->
-                    <li>
-                        <a class="icon-link icon-link-hover nav-link active" aria-current="page"
-                            style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration: none;" href="/contact">
+                    <!-- Contact -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact" style="padding: 5px; text-decoration:none;">
                             <span class="text-success bg-light p-1 rounded">
                                 <i class="fas fa-globe me-1"></i>
                                 Contact Us
@@ -132,19 +117,19 @@
                         </a>
                     </li>
 
-                    <!--- News   --->
-                    <li>
-                        <a class="icon-link nav-link  active icon-link-hover" aria-current="page"
-                            style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration: none;" href="/news">
+                    <!-- News -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/news" style="padding: 5px; text-decoration:none;">
                             <span class="text-success bg-light p-1 rounded">
                                 <i class="fas fa-newspaper me-1"></i>
                                 News
                             </span>
                         </a>
                     </li>
-                    <li>
-                        <a class="icon-link nav-link  active icon-link-hover" aria-current="page"
-                            style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration: none;" href="/student">
+
+                    <!-- Students -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/student" style="padding: 5px; text-decoration:none;">
                             <span class="text-success bg-light p-1 rounded">
                                 <i class="fas fa-users me-1"></i>
                                 Students
@@ -152,26 +137,25 @@
                         </a>
                     </li>
 
-
                 </ul>
-
 
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success rounded-pill" type="submit">Search</button>
                 </form>
 
-                <li class="no">
-                    <a href="./login"><button class='loginbtn rounded-pill'
-                            onclick="document.getElementById('login-form').style.display='block'"
-                            style="width:auto;">Login</button></a>
-                </li>
-
+                <a href="./login" class="nav-link">
+                    <button class="btn loginbtn rounded-pill"
+                        onclick="document.getElementById('login-form').style.display='block'"
+                        style="width:auto; 
+                        background-color: #fff;    padding-right: 3px; padding-left: 13px;    padding: 7px 17px;    border-radius: 20px;    color: #101C32;    transition: 0.4s ease-in-out;    text-decoration: none;    font-size: 0.9rem;    font-weight: 600;    border-radius: 5px;    border: 1px solid red;
+                            text-decoration: none;     color: #fff;    background: rgb(248, 47, 47);    transition: 0.3s ease;">Login
+                    </button>
+                </a>
             </div>
-
         </div>
-
     </nav>
+
     <!-- Bootstrap JS (including Popper.js and jQuery) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -182,8 +166,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
-
-    <!---  nav Ends  --->
 </body>
 
 </html>

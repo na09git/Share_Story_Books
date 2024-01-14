@@ -1,3 +1,4 @@
+// student Schema
 const mongoose = require('mongoose')
 
 const StudentSchema = new mongoose.Schema({
@@ -19,13 +20,18 @@ const StudentSchema = new mongoose.Schema({
         default: 'Paid',
         enum: ['Paid', 'Not-Paid'],
     },
-    image: {
-        data: {
-            type: Buffer,
-        },
-        contentType: {
-            type: String,
-        },
+    gender: {
+        type: String,
+        default: 'M',
+        enum: ['M', 'F'],
+    },
+    imageBase64: {
+        type: String,
+        require: true,
+    },
+    contentType: {
+        type: String,
+        required: true,
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

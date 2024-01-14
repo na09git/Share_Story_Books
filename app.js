@@ -10,6 +10,8 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 const connectDB = require('./config/db')
 const multer = require('multer');
+const handlebarsHelpers = require('handlebars-helpers')();
+const base64Helper = (data) => new handlebars.SafeString(data.toString('base64'));
 
 
 // Load config
@@ -22,11 +24,7 @@ connectDB()
 
 const app = express()
 
-// Body parser
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
-
-// Method override
+// Method overrides
 app.use(
   methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -38,10 +36,17 @@ app.use(
   })
 )
 
+
+// Body parser
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+
+
 // Logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
+
 
 // Handlebars Helpers
 const {
@@ -65,7 +70,6 @@ app.engine(
       editIcon1,
       select,
     },
-
     defaultLayout: 'main',
     extname: '.hbs',
   })
@@ -97,6 +101,16 @@ app.get('/', (req, res) => {
   res.render('student', { title: "Student Page" }, { layout: false });
 });
 
+// Routes workers Page
+app.get('/', (req, res) => {
+  res.render('worker', { title: "Worker Page" }, { layout: false });
+});
+
+// Routes Problems Page
+app.get('/', (req, res) => {
+  res.render('problempage', { title: "Student Page" }, { layout: false });
+});
+
 
 // Sessions
 app.use(
@@ -121,8 +135,7 @@ app.use(function (req, res, next) {
 // Static folder
 // The express.static middleware should be placed before other middleware or route handlers that might need to handle specific routes. 
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.static(path.join(__dirname, 'uploads')))
-app.use(express.static(path.join(__dirname, 'uploadsnews')))
+app.use(express.static(path.join(__dirname, 'uploads', 'uploadsnews', 'uploadstudent')))
 
 // Routes
 app.use('/', require('./routes/index'))
@@ -133,6 +146,8 @@ app.use('/home', require('./routes/home'))
 app.use('/contact', require('./routes/contact'));
 app.use('/amirdetail', require('./routes/amirdetail'));
 app.use('/student', require('./routes/student'));
+app.use('/worker', require('./routes/worker'));
+app.use('/problem', require('./routes/problem'));
 
 
 const PORT = process.env.PORT || 3000

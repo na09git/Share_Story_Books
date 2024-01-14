@@ -1,0 +1,50 @@
+<div class="container mt-5">
+    <h3>Edit Worker Information</h3>
+    <div class="row" style="padding-left: 80px;">
+        <form action="/worker/{{worker._id}}" method="POST" class="col-md-8 col-lg-6">
+            <input type="hidden" name="_method" value="PUT">
+            <!-- 1 image--->
+            <div class="mb-3">
+                <label for="title" class="form-label"> Name :</label>
+                <input type="text" class="form-control" id="title" name="name" value="{{worker.name}}">
+
+            </div>
+            <!-- 2 Email--->
+            <div class="mb-3">
+                <label for="title" class="form-label">Email </label>
+                <input type="email" class="form-control" id="email" name="email" value="{{worker.email}}">
+            </div>
+            <!-- 3 Phone --->
+            <div class="mb-3">
+                <label for="title" class="form-label">Phone</label>
+                <input type="tel" class="form-control " id="phone" name="phone" value="{{worker.phone}}">
+            </div>
+            <!-- 4 salry --->
+            <div class="mb-3">
+                <label for="title" class="form-label">Salary</label>
+                <input type="text" class="form-control " id="salary" name="salary" value="{{worker.salary}}">
+            </div>
+
+            <!-- 5 gender --->
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender" name="gender">
+                    {{#select worker.gender}}
+                    <option value="M" selected>M</option>
+                    <option value="F">F</option>
+                    {{/select}}
+                </select>
+            </div>
+            <!-- 6 Image--->
+            <div class="mb-3">
+                <label for="image" class="form-label">Change Image</label>
+                <input type="file" class="form-control" id="image" name="image" src="{{worker.image}}">
+            </div>
+            <!-- 7 Action--->
+            <div class="mb-3">
+                <input type="submit" value="Save" class="btn btn-primary">
+                <a href="/worker" class="btn btn-warning">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

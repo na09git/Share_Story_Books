@@ -1,0 +1,69 @@
+<div class="w-100" style="z-index: 100; position: fixed; margin-left: 10px; padding-right: 260px; padding-left: 6px;">
+    {{> _problemheader}}
+</div>
+
+<div class="container mt-5">
+    <h3>Edit Student Problem</h3>
+    <div class="row" style="padding-left: 80px;">
+        <form action="/problem/{{problem._id}}" method="POST" class="col-md-8 col-lg-6">
+            <input type="hidden" name="_method" value="PUT">
+            <!-- 1 name--->
+            <div class="mb-3">
+                <label for="name" class="form-label"> Name :</label>
+                <input type="text" class="form-control" id="title" name="name" value="{{problem.name}}">
+            </div>
+
+            <!-- 2 Phone --->
+            <div class="mb-3">
+                <label for="title" class="form-label">Phone</label>
+                <input type="tel" class="form-control " id="phone" name="phone" value="{{problem.phone}}">
+            </div>
+            <!-- 3 problem--->
+            <div class="mb-3">
+                <label for="body" class="form-label">Tell Us student problem:</label>
+                <textarea class="form-control" id="body" name="body">{{problem.body}}</textarea>
+            </div>
+            <!-- 4 grade --->
+            <div class="mb-3">
+                <label for="grade" class="form-label">Grade</label>
+                <select class="form-select" id="grade" name="grade">
+                    {{#select problem.grade}}
+                    <option value="1" selected>1</option>
+                    <option value="kg-1">kg-1</option>
+                    <option value="kg-2">kg-2</option>
+                    <option value="kg-3">kg-3</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    {{/select}}
+                </select>
+            </div>
+
+            <!-- 5 case --->
+            <div class="mb-3">
+                <label for="case" class="form-label">Case</label>
+                <select class="form-select" id="case" name="case">
+                    {{#select problem.case}}
+                    <option value="Normal" selected>Normal</option>
+                    <option value="Worst">Worst</option>
+                    {{/select}}
+                </select>
+            </div>
+
+            <!-- 6 Action--->
+            <div class="mb-3">
+                <input type="submit" value="Save" class="btn btn-primary">
+                <a href="/problem" class="btn btn-warning">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,44 +1,57 @@
-<div class="w-100" style="position: fixed; z-index: 100; padding-left :10px; padding-right:160px;">
+<div class="w-100" style="position: fixed; z-index: 100; ">
     {{> _newsheader}}
 </div>
 <div>
     {{> _create_btn}}
 </div>
-<h1 class="display-4 " style=" padding-top:75px; padding-bottom:10px; padding-left:20px;">News</h1>
-<form id="search-site" action='/news/search/:query' method='get' class="mb-4">
-    <div class="input-group">
-        <span class="input-group-text"><i class="fas fa-search fa-lg"></i></span>
-        <div class="form-floating">
-            <input id="search" type="search" name='query' class="form-control w-90" placeholder="Search by title">
-            <label for="search">Search</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-</form>
 
-<div class="row" style="padding: 30px;">
-    {{#each news}}
-    <div class="col-12 col-md-4">
-        <div class="card mb-4">
-            <div class="card-img-top">
-                {{{editIcon1 user ../user _id}}}
+<div style="padding:45px;">
+    <h2 class="display-4 " style=" padding-top:45px; padding-bottom:10px; padding-left:70px; padding-right:70px;">News
+    </h2>
+    <form id="search-site" action='/news/search/:query' method='get' class="mb-4"
+        style="padding-left:50px; padding-right:50px;">
+        <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-search fa-lg"></i></span>
+            <div class="form-floating">
+                <input id="search" type="search" name='query' class="form-control w-90" placeholder="Search by title">
+                <label for="search">Search</label>
             </div>
-            <div class="card-body text-center">
-                <h5 class="card-title">{{title}}</h5>
-                <p class="card-text">{{stripTags (truncate body 150)}}</p>
-                <div class="chip gap-0 ">
-                    <img style="height: 35px; weight: 35px;" class="chip-img rounded" src="{{user.image}}"
-                        alt="{{user.displayName}}">
-                    <a style="text-decoration: none; background-color:#e9e0e0; border-radius:20px; padding-top:6px; padding-bottom:8px; padding-left:20px; padding-right:20px;"
-                        href="/mews/user/{{user._id}}" class="chip-link">{{user.displayName}}</a>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    <div class="row" style="padding: 20px; ">
+        {{#each news}}
+        <div class="row ">
+            <div class="col-4 card mb-3 " style="height: 320px;">
+                {{#if news.image}}
+                <img src="{{news.image}}" style=" height:320px;" class="img-thumbnail w-100">
+                {{else}}
+                <img src="images/no_image.png" style=" height:320px;" class="img-thumbnail w-100">
+                {{/if}}
+            </div>
+            <div class="col-8 card mb-4 " style="height: 320px;">
+                <div class="card-img-top">
+                    {{{editIcon1 user ../user _id}}}
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{title}}</h5>
+                    <p class="card-text">{{stripTags (truncate body 150)}}</p>
+                    <div class="chip gap-0 ">
+                        <img style="height: 35px; weight: 35px;" class="chip-img rounded" src="{{user.image}}"
+                            alt="{{user.displayName}}">
+                        <a style="text-decoration: none; background-color:#e9e0e0; border-radius:20px; padding-top:6px; padding-bottom:8px; padding-left:20px; padding-right:20px;"
+                            href="/mews/user/{{user._id}}" class="chip-link">{{user.displayName}}</a>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/news/{{_id}}" class="btn btn-secondary">Read More</a>
                 </div>
             </div>
-            <div class="card-footer text-center">
-                <a href="/news/{{_id}}" class="btn btn-secondary">Read More</a>
-            </div>
         </div>
+        {{else}}
+        <p class="col-12 text-center">No News to display</p>
+        {{/each}}
     </div>
-    {{else}}
-    <p class="col-12 text-center">No News to display</p>
-    {{/each}}
+
 </div>

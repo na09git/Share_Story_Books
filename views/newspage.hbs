@@ -1,4 +1,4 @@
-<div class="w-100" style="position: fixed; z-index: 100; padding-right:200px;">
+<div class="w-100" style="position: fixed; z-index: 100; ">
     {{> _newsheader}}
 </div>
 <div>
@@ -26,7 +26,13 @@
         {{#each news as |row index|}}
         <tr>
             <td style="padding: 2px;">{{index}}</td>
-            <td style="padding: 2px;"><img src="{{row.image}}" width="60" class="img-thumbnail"></td>
+            <td style="padding: 2px;">
+                {{#if row.image}}
+                <img src="{{row.image}}" width="60" class="img-thumbnail">
+                {{else}}
+                <img src="images/no_image.png" width="50" class="img-thumbnail">
+                {{/if}}
+            </td>
             <td style="padding: 2px;"><a href="/news/{{row._id}}">{{row.title}}</a></td>
             <td style="padding: 2px;">{{formatDate row.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
             <td style="padding: 2px;"><span class="dash-status">{{row.status}}</span></td>

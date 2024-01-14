@@ -1,0 +1,45 @@
+<div class="w-100" style="z-index: 100; position: fixed; ">
+    {{> _problemheader}}
+</div>
+
+{{!-- body --}}
+<div style="padding: 40px;">
+    <h1 class="display-4 " style=" padding-top:45px; ">problems</h1>
+    <div style="padding-left:100px ;padding-right:100px ;padding-top10px">
+        <form id="search-site" action='/problem/search/:query' method='get' class="mb-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search fa-lg"></i></span>
+                <div class="form-floating">
+                    <input id="search" type="search" name='query' class="form-control w-90"
+                        placeholder="Search by title">
+                    <label for="search">Search</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="row" style="padding: 30px;">
+        {{#each problem}}
+        <div class="col-12 col-md-4">
+            <div class="card mb-4">
+                <div class="card-img-top">
+                    {{{editIcon user ../user _id}}}
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{problem.name}}</h5>
+                    <h5 class="card-title">{{problem.phone}}</h5>
+                    <h6 class="card-title">{{problem.body}}</h6>
+                    <h5 class="card-title">{{problem.grade}}</h5>
+                    <h5 class="card-title">{{problem.case}}</h5>
+                </div>
+
+                <div class="card-footer text-center">
+                    <a href="/problem/{{_id}}" class="btn btn-secondary">Read More</a>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <p class="col-12 text-center">No Problem to display !</p>
+        {{/each}}
+    </div>
+</div>
