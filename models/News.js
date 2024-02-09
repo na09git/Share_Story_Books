@@ -1,12 +1,14 @@
 const mongoose = require('mongoose')
 
 const NewsSchema = new mongoose.Schema({
-    image: [
-        {
-            data: { type: Buffer }, // Store the image data as a buffer
-            content: { type: String }, // Store the content type of the image
-        }
-    ],
+    imageBase64: {
+        type: String,
+        required: true,
+    },
+    contentType: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         required: true,
@@ -15,11 +17,6 @@ const NewsSchema = new mongoose.Schema({
     body: {
         type: String,
         required: true,
-    },
-    status: {
-        type: String,
-        default: 'public',
-        enum: ['public', 'private'],
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

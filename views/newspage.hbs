@@ -1,65 +1,86 @@
 <div class="w-100" style="position: fixed; z-index: 100; ">
     {{> _newsheader}}
 </div>
-<div>
-    {{> _create_btn}}
+<div style="z-index: 100; position:fixed;">
+    {{> _addnews_btn}}
 </div>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css"
+    integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<h6 style=" padding-top:80px;"> Boardcasted News</h6>
-<h3 style="padding-left:50px;">Welcome {{name}}</h3>
 
-{{#if news}}
-<table class="table table-striped w-100">
-    <thead class="bg-secondary">
-        <tr>
-            <th>No. </th>
-            <th>Image </th>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
+<div style="padding: 50px;">
 
-    <tbody>
-        {{#each news as |row index|}}
-        <tr>
-            <td style="padding: 2px;">{{index}}</td>
-            <td style="padding: 2px;">
-                {{#if row.image}}
-                <img src="{{row.image}}" width="60" class="img-thumbnail">
-                {{else}}
-                <img src="images/no_image.png" width="50" class="img-thumbnail">
-                {{/if}}
-            </td>
-            <td style="padding: 2px;"><a href="/news/{{row._id}}">{{row.title}}</a></td>
-            <td style="padding: 2px;">{{formatDate row.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
-            <td style="padding: 2px;"><span class="dash-status">{{row.status}}</span></td>
-            <td style="padding: 2px;">
-                <div style="display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr)">
-                    <div>
-                        <a href="/news/edit/{{row._id}}" class="btn p-2 btn-float bg-warning">
-                            <i class="fas fa-edit btn-float "></i>
-                        </a>
+    <div class="row" style="padding-top: 60px;">
+        <div class="col">
+            <h6>Boardcasted News</h6>
+        </div>
+        <div class="col">
+            <h3 style="padding-left: 350px;">Welcome {{name}}</h3>
+        </div>
+    </div>
+
+
+    {{#if news}}
+    <table class="table table-striped w-100" id="data_news">
+        <thead class="bg-secondary">
+            <tr>
+                <th>No. </th>
+                <th class="text-center">Image </th>
+                <th class="text-center">Title</th>
+                <th class="text-center">Body</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{#each news as |row index|}}
+            <tr style="text-align:center;">
+                <td style="padding: 2px;">{{index}}</td>
+                {{!-- 1 image --}}
+                <td style="padding: 2px;">
+                    {{#if row.imageBase64}}
+                    <img src='data:{{row.contentType}};base64,{{row.imageBase64}}' width="50" class="student image">
+                    {{else}}
+                    <img src="images/no_image.png" width="50" class="img-thumbnail">
+                    {{/if}}
+                </td>
+                {{!-- 2 title --}}
+                <td style="padding: 2px;"><a href="/news/{{row._id}}">{{row.title}}</a></td>
+                {{!-- 3 Body --}}
+                <td class="card-body card-text text-center">
+                    <p class="card-title">{{stripTags (truncate row.body 50)}}</p>
+                </td>
+                {{!-- 4 Date --}}
+                <td style="padding: 2px;">{{formatDate row.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
+                {{!-- 5 Action --}}
+                <td style="padding: 2px;">
+                    <div style="display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr)">
+                        <div>
+                            <a href="/news/edit/{{row._id}}" class="btn p-2 btn-float  text-primary">
+                                <i class="fas fa-edit fa-lg mx-1"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <form action="/news/{{row._id}}" method="POST" id="delete-form">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn text-danger">
+                                    <i class="fas fa-trash fa-lg mx-1"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div>
-                        <form action="/news/{{row._id}}" method="POST" id="delete-form">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn bg-danger">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                </td>
 
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 
-            </td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+    {{else}}
+    <p>There is no News Broadcasted yet</p>
+    {{/if}}
 
-{{else}}
-<p>There is no News Broadcasted yet</p>
-{{/if}}
+</div>

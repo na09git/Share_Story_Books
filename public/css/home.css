@@ -34,32 +34,37 @@
     padding-top: 20px;
 }
 
-#div7 {
-    position: relative;
-    padding-top: 20px;
-}
 
-#div8 {
-    position: relative;
-    padding-top: 20px;
-}
+/*#div9  is at the bottom of the code */
 
 #div9 {
     position: relative;
-    padding-top: 10px;
+    margin-top: 100px;
+    height: auto;
 }
 
 #div10 {
     position: relative;
-    padding-top: 500px;
+    padding-top: 30px;
 }
 
 #div11 {
     position: relative;
-    padding-top: 30px;
+    padding-top: 10px;
 }
 
-#div12 {
-    position: relative;
-    padding-top: 10px;
+@media screen and (min-width: 700px) {
+    #div8 {
+        position: relative;
+        padding-top: 70px;
+        padding-bottom: 450px;
+    }
+}
+
+@media screen and (max-width: 699px) {
+    #div8 {
+        position: relative;
+        padding-top: 70px;
+        padding-bottom: 910px;
+    }
 }

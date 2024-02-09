@@ -9,6 +9,10 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    {{!-- Data Table --}}
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -100,7 +104,7 @@
     <div class="offcanvas sidenav offcanvas-start" tabindex="-1" id="offcanvasExample"
         aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <a href="#!" class="offcanvas-title text-decoration-none" id="offcanvasExampleLabel">Menus</a>
+            <a href="#!" class="offcanvas-title text-decoration-none" id="offcanvasExampleLabel">Dashboard</a>
             <button type="button" class="btn-close float-end" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -119,10 +123,16 @@
                             <td>
                                 <img width="40" height="40" src="https://img.icons8.com/dotty/80/laptop-metrics--v3.png"
                                     alt="laptop-metrics--v3" />
-                                <a href="/newspage" class="text-decoration-none">Dashboard</a>
+                                <a href="/newspage" class="text-decoration-none">News Dashboard</a>
                             </td>
                         </tr>
-
+                        <tr>
+                            <td>
+                                <img width="40" height="40" src="https://img.icons8.com/dotty/80/laptop-metrics--v3.png"
+                                    alt="laptop-metrics--v3" />
+                                <a href="/newspage" class="text-decoration-none"> Total Info about News </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -133,6 +143,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#data_news").DataTable({
+                order: [0, 'desc']
+            });
+        });
+    </script>
 </body>
 
 </html>

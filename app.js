@@ -3,8 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
-const exphbs = require('express-handlebars')
-const methodOverride = require('method-override')
+const exphbs = require('express-handlebars');
+const methodOverride = require('method-override');
 const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
@@ -12,6 +12,7 @@ const connectDB = require('./config/db')
 const multer = require('multer');
 const handlebarsHelpers = require('handlebars-helpers')();
 const base64Helper = (data) => new handlebars.SafeString(data.toString('base64'));
+const app = express()
 
 
 // Load config
@@ -22,7 +23,9 @@ require('./config/passport')(passport)
 
 connectDB()
 
-const app = express()
+// Body parser
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 // Method overrides
 app.use(
@@ -34,19 +37,13 @@ app.use(
       return method
     }
   })
-)
-
-
-// Body parser
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
+);
 
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
-
 
 // Handlebars Helpers
 const {
@@ -58,59 +55,55 @@ const {
   select,
 } = require('./helpers/hbs')
 
-// Handlebars
-app.engine(
-  '.hbs',
-  exphbs({
-    helpers: {
-      formatDate,
-      stripTags,
-      truncate,
-      editIcon,
-      editIcon1,
-      select,
-    },
-    defaultLayout: 'main',
-    extname: '.hbs',
-  })
-)
+const hbs = exphbs.create({
+  helpers: {
+    formatDate,
+    stripTags,
+    truncate,
+    editIcon,
+    editIcon1,
+    select,
+  },
+  defaultLayout: 'main',
+  extname: '.hbs',
+});
+
+app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs')
+
 
 // home render
 app.get('/', function (req, res) {
   res.render('home', { layout: false });
 });
-
 // Routes News
 app.get('/', (req, res) => {
   res.render('newspage', { title: "News Page" }, { layout: false });
 });
-
 // Routes Contact _ Us Page
 app.get('/', (req, res) => {
   res.render('contact', { title: "Contact Page" }, { layout: false });
 });
-
 // Routes amirdetail Page
 app.get('/', (req, res) => {
-  res.render('amirdetail', { title: "Jema'a Amir" }, { layout: false });
+  res.render('amirmessage', { title: "Jema'a Amir" }, { layout: false });
 });
-
+// Routes vission-and-mission Page
+app.get('/', (req, res) => {
+  res.render('vission-and-mission', { title: "vission-and-mission" }, { layout: false });
+});
 // Routes students Page
 app.get('/', (req, res) => {
-  res.render('student', { title: "Student Page" }, { layout: false });
+  res.render('students', { title: "Students Page" }, { layout: false });
 });
-
 // Routes workers Page
 app.get('/', (req, res) => {
-  res.render('worker', { title: "Worker Page" }, { layout: false });
+  res.render('workers', { title: "Workers Page" }, { layout: false });
 });
-
 // Routes Problems Page
 app.get('/', (req, res) => {
-  res.render('problempage', { title: "Student Page" }, { layout: false });
+  res.render('problems', { title: "Problem Page" }, { layout: false });
 });
-
 
 // Sessions
 app.use(
@@ -135,16 +128,17 @@ app.use(function (req, res, next) {
 // Static folder
 // The express.static middleware should be placed before other middleware or route handlers that might need to handle specific routes. 
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.static(path.join(__dirname, 'uploads', 'uploadsnews', 'uploadstudent')))
+app.use(express.static(path.join(__dirname, 'uploadstory', 'uploadsnews', 'uploadstudent', 'uploadworker')))
 
 // Routes
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
-app.use('/stories', require('./routes/stories'))
+app.use('/story', require('./routes/story'))
 app.use('/news', require('./routes/news'));
 app.use('/home', require('./routes/home'))
 app.use('/contact', require('./routes/contact'));
-app.use('/amirdetail', require('./routes/amirdetail'));
+app.use('/amirmessage', require('./routes/amirmessage'));
+app.use('/vission-and-mission', require('./routes/vission-and-mission'));
 app.use('/student', require('./routes/student'));
 app.use('/worker', require('./routes/worker'));
 app.use('/problem', require('./routes/problem'));

@@ -1,0 +1,87 @@
+<div class="w-100" style="position: fixed; z-index: 100; ">
+    {{> _storyheader}}
+</div>
+
+<div class="container" style="padding-top: 85px; padding-bottom: 30px;">
+    <div class="row">
+        <div class="row" style="padding: 40px;">
+            {{#each story as |row index| }}
+            <div class="col-md-12" style="margin-bottom: 300px;">
+                <div class="card mb-4" style="min-height: 200px; border: 0;">
+
+                    <div class="card-img-top" style="float: right;">
+                        {{{editIcon1 user ../user _id}}}
+                    </div>
+
+                    <div class="text-center" style="padding-bottom: 30px;">
+                        <h5 class="card-title">{{title}}</h5>
+                    </div>
+                    <div class="container" style="height: 300px;">
+                        <div class="row">
+                            <div class="col-md-6" style="height: 300px;">
+                                <div class="card mb-3" style="height: 300px; border: 0;">
+                                    {{#if imageBase64}}
+                                    <img src='data:{{contentType}};base64,{{imageBase64}}' class="news-image img-fluid"
+                                        style="min-height: 200px;">
+                                    {{else}}
+                                    <img src="images/no_image.png" class="img-thumbnail img-fluid"
+                                        style="min-height: 200px;">
+                                    {{/if}}
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="height: 300px;">
+                                <div class="card-body">
+                                    <p class="card-text">{{stripTags (truncate row.body 200)}}</p>
+                                </div>
+                                <div class="card-footer text-center" style="padding-bottom: 30px;">
+                                    <a href="/news/{{_id}}" class="btn btn-secondary">Read More</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+
+            </div>
+            {{else}}
+            <p class="col-12 text-center">No News to display</p>
+            {{/each}}
+        </div>
+
+
+        <div class="col-md-4" style="padding-left: 45px; padding-right: 45px; padding-top: 25px; ">
+            <div class="card text-center">
+                <div class="card-content">
+                    <div style="padding-top: 10px;">
+                        <span class="card-title">{{story.user.displayName}}</span>
+                    </div>
+
+                    <div style="padding: 7px;">
+                        {{#if story.imageBase64}}
+                        <img src='data:{{story.contentType}};base64,{{story.imageBase64}}'
+                            class="rounded-circle img-fluid img-small" alt="news image"
+                            style="height: 150px; width: 150px;">
+                        {{else}}
+                        {{!-- its not neccessary to display this --}}
+                        {{!-- <img src="images/no_image.png" style="width:150; height:150px;" class="img-thumbnail">
+                        --}}
+                        {{/if}}
+                    </div>
+                </div>
+                <hr>
+
+                <div class="card-action" style="padding-bottom: 13px;">
+                    <button type="button" class="btn  btn-primary link-unstyled text-decoration-none"
+                        style="background-color: #3498db; border-color: #3498db; "
+                        onmouseover="this.style.backgroundColor='#2980b9'"
+                        onmouseout="this.style.backgroundColor='#3498db'"
+                        onclick="window.location.href='/news/user/{{story.user._id}}'">
+                        Contact Admin with {{story.user.firstName}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

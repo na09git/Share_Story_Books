@@ -17,41 +17,36 @@ router.get('/addproblem', ensureAuth, (req, res) => {
 router.post('/', ensureAuth, async (req, res) => {
     try {
         console.log('Received data:', req.body);
-        // Ensure that name and body are present in the request body
-        if (!req.body.name || !req.body.body) {
-            console.error('Validation Error - Missing required fields (name and/or body)');
-            return res.render('error/500');
-        }
+
         req.body.user = req.user.id;
         await Problem.create(req.body);
-        res.redirect('/problem');
+        res.redirect('/problems');
     } catch (err) {
-        console.error(err);
-        // Log specific validation errors
-        if (err.errors) {
-            Object.keys(err.errors).forEach((key) => {
-                console.error(`Validation Error - ${key}: ${err.errors[key].message}`);
-            });
-        }
-        res.render('error/500');
+        console.error(err)
+        res.render('error/500')
     }
+
 });
 
-// @desc    Show all problems
+
+// @desc    Show all problem
 // @route   GET /problem
 router.get('/', ensureAuth, async (req, res) => {
     try {
         const problem = await Problem.find()
             .populate('user')
-            .sort({ createdAt: 1 })
-            .lean();
+            .sort({ createdAt: -1 })
+            .lean()
 
-        res.render('problem/index', { problem });
+        res.render('problem/index', {
+            problem,
+        })
     } catch (err) {
-        console.error(err);
-        res.render('error/500');
+        console.error(err)
+        res.render('error/500')
     }
-});
+})
+
 
 // @desc    Show single problem
 // @route   GET /problem/:id
@@ -59,18 +54,21 @@ router.get('/:id', ensureAuth, async (req, res) => {
     try {
         let problem = await Problem.findById(req.params.id)
             .populate('user')
-            .lean();
+            .lean()
 
         if (!problem) {
-            return res.send('No Problem in Our School ! ');
+            return res.render('error/404')
         } else {
-            res.render('problem/show', { problem });
+            res.render('problem/show', {
+                problem,
+            })
         }
     } catch (err) {
-        console.error(err);
-        res.render('error/404');
+        console.error(err)
+        res.render('error/404')
     }
-});
+})
+
 
 // @desc    Show edit page
 // @route   GET /problem/edit/:id
@@ -78,48 +76,48 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
     try {
         const problem = await Problem.findOne({
             _id: req.params.id,
-        }).lean();
+        }).lean()
 
         if (!problem) {
-            return res.render('error/404');
-        }
-
-        if (problem.user != req.user.id) {
-            res.redirect('/problem');
+            return res.render('error/404')
         } else {
-            res.render('problem/edit', { problem });
+            res.render('problem/edit', {
+                problem,
+            })
         }
     } catch (err) {
-        console.error(err);
-        return res.render('error/500');
+        console.error(err)
+        return res.render('error/500')
     }
-});
+})
+
 
 // @desc    Update problem
 // @route   PUT /problem/:id
-router.put('/:id', ensureAuth, async (req, res) => {
+router.post('/:id', ensureAuth, async (req, res) => {
     try {
-        let problem = await Problem.findById(req.params.id).lean();
+        let problem = await Problem.findById(req.params.id).lean()
 
         if (!problem) {
-            return res.render('error/404');
+            return res.render('error/404')
         }
 
         if (problem.user != req.user.id) {
-            res.redirect('/problem');
+            res.redirect('/problems')
         } else {
             problem = await Problem.findOneAndUpdate({ _id: req.params.id }, req.body, {
                 new: true,
                 runValidators: true,
-            });
+            })
 
-            res.redirect('/problempage');
+            res.redirect('/problems')
         }
     } catch (err) {
-        console.error(err);
-        return res.render('error/500');
+        console.error(err)
+        return res.render('error/500')
     }
-});
+})
+
 
 // @desc    Delete problem
 // @route   DELETE /problem/:id
@@ -135,7 +133,7 @@ router.delete('/:id', ensureAuth, async (req, res) => {
             res.redirect('/problem');
         } else {
             await Problem.deleteOne({ _id: req.params.id });
-            res.redirect('/problem');
+            res.redirect('/problems');
         }
     } catch (err) {
         console.error(err);

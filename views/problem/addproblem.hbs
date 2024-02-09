@@ -1,23 +1,25 @@
-<div class="w-100" style="z-index: 100; position: fixed;">
+<div class="w-100" style="z-index: 99; ">
     {{> _problemheader}}
 </div>
-<h3 class="mt-4" style="padding-left: 40px;">Add Problems</h3>
-<div class="row p-4 ">
-    <form action="/problem" method="POST">
+
+<h3 class="mt-3" style="padding-left: 140px; ">Add Problems</h3>
+
+<div class="row p-2 ">
+    <form action="/problem" method="POST" onsubmit="return validateForm()">
         <!--- 1 name--->
         <div class="mb-1 col-md-4 col-lg-2 col-xl-4 mx-auto">
-            <label for="name" class="form-label" required>Name</label>
+            <label for="name" class="form-label" required>Name :</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
         </div>
         <!--- 2 phone--->
         <div class="mb-1 col-md-4 col-lg-2 col-xl-4 mx-auto">
-            <label for="phone" class="form-label ">Phone</label>
+            <label for="phone" class="form-label ">Phone :</label>
             <input type="tel" class="form-control " id="phone" name="phone" placeholder="Enter phone">
         </div>
         <!--- 3 Case --->
         <div class="mb-1 col-md-4 col-lg-2 col-xl-4 mx-auto ">
             <label for="case" class="form-label">Case</label>
-            <select class="form-select" id="case" name="case">
+            <select class="form-select" id="case" name="case" required>
                 <option value="Normal" selected>Normal</option>
                 <option value="Worst">Worst</option>
             </select>
@@ -25,7 +27,7 @@
         <!--- 4 grade --->
         <div class="mb-1 col-md-4 col-lg-2 col-xl-4 mx-auto ">
             <label for="grade" class="form-label">Grade</label>
-            <select class="form-select" id="grade" name="grade">
+            <select class="form-select" id="grade" name="grade" required>
                 <option value="kg-1">kg-1</option>
                 <option value="kg-2">kg-2</option>
                 <option value="kg-3">kg-3</option>
@@ -51,7 +53,7 @@
         <!--- 6 Action --->
         <div class="mb-3 col-md-6 col-lg-2 col-xl-4 mx-auto" style="padding-top: 10px;">
             <button type="submit" class="btn btn-primary">Add </button>
-            <a href="/problem" class="btn btn-warning">Cancel</a>
+            <a href="/problems" class="btn btn-warning">Cancel</a>
         </div>
     </form>
 </div>

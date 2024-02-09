@@ -1,12 +1,14 @@
 const mongoose = require('mongoose')
 
 const StorySchema = new mongoose.Schema({
-  image: [
-    {
-      data: { type: Buffer }, // Store the image data as a buffer
-      content: { type: String }, // Store the content type of the image
-    }
-  ],
+  imageBase64: {
+    type: String,
+    required: true,
+  },
+  contentType: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -18,8 +20,8 @@ const StorySchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'public',
-    enum: ['public', 'private'],
+    default: 'Public',
+    enum: ['Public', 'Private'],
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

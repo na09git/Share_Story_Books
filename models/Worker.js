@@ -15,6 +15,11 @@ const WorkerSchema = new mongoose.Schema({
     phone: {
         type: String,
     },
+    position: {
+        type: String,
+        default: 'Teacher',
+        enum: ['Teacher', 'Manager', 'Ustaz', 'Cleaner', 'Security', 'Driver', 'Cashier', 'Director', 'IT-Technician'],
+    },
     salary: {
         type: String,
         required: true,
@@ -25,13 +30,13 @@ const WorkerSchema = new mongoose.Schema({
         default: 'M',
         enum: ['M', 'F'],
     },
-    image: {
-        data: {
-            type: Buffer,
-        },
-        contentType: {
-            type: String,
-        },
+    imageBase64: {
+        type: String,
+        required: true,
+    },
+    contentType: {
+        type: String,
+        required: true,
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

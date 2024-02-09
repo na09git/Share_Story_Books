@@ -1,8 +1,9 @@
-const fs = require('fs');
 const express = require('express');
-const multer = require('multer');
-const { ensureAuth } = require('../middleware/auth');
 const router = express.Router();
+const multer = require('multer');
+const fs = require('fs');
+const { ensureAuth } = require('../middleware/auth');
+
 const Student = require('../models/Student');
 
 // Set up multer storage
@@ -17,6 +18,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
 
 // @desc Show add student page
 // @route GET /student/addstudent
@@ -49,7 +51,9 @@ router.post('/', ensureAuth, upload.single('image'), async (req, res) => {
 
         try {
             await newUpload.save();
-            res.redirect('/student');
+            res.redirect('/students');
+            console.log("New Student with image/upload is Registered");
+
         } catch (error) {
             if (error.name === 'MongoError' && error.code === 11000) {
                 return res.status(400).json({ error: `Duplicate ${file.originalname}. File Already exists! ` });
@@ -67,12 +71,15 @@ router.post('/', ensureAuth, upload.single('image'), async (req, res) => {
 // @route GET /student/index
 router.get('/', ensureAuth, async (req, res) => {
     try {
-        const students = await Student.find()
+        const student = await Student.find()
             .populate('user')
-            .sort({ createdAt: 1 })
+            .sort({ createdAt: -1 })
             .lean();
 
-        res.render('student/index', { students });
+        res.render('student/index', {
+            student,
+        });
+        console.log("You can now see All Student Here !");
     } catch (err) {
         console.error(err);
         res.render('error/500');
@@ -80,28 +87,32 @@ router.get('/', ensureAuth, async (req, res) => {
 });
 
 
-// @desc Show single student
-// @route GET /student/:id
+// @desc    Show single student
+// @route   GET /student/:id
 router.get('/:id', ensureAuth, async (req, res) => {
     try {
-        const student = await Student.findById(req.params.id)
+        let student = await Student.findById(req.params.id)
             .populate('user')
-            .lean();
+            .lean()
 
         if (!student) {
-            return res.render('error/404');
+            return res.render('error/404')
         }
 
         if (student.user._id != req.user.id) {
-            return res.render('error/404');
+            res.render('error/404')
+        } else {
+            res.render('student/show', {
+                student,
+            })
         }
-
-        res.render('student/show', { student });
+        console.log("You can now see the student details");
     } catch (err) {
-        console.error(err);
-        res.render('error/404');
+        console.error(err)
+        res.render('error/404')
     }
-});
+})
+
 
 
 // @desc Show edit page
@@ -115,10 +126,13 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
         }
 
         if (student.user.toString() !== req.user.id) {
-            return res.redirect('/student');
+            return res.redirect('/students');
+        } else {
+            res.render('student/edit', {
+                student,
+            });
         }
-
-        res.render('student/edit', { student });
+        console.log("You are in student/edit page & can Edit this student info");
     } catch (err) {
         console.error(err);
         return res.render('error/500');
@@ -126,19 +140,20 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
 });
 
 
-// @desc Update student
-// @route PUT /student/:id
-router.put('/:id', ensureAuth, upload.single('image'), async (req, res) => {
-    console.log('Update route reached'); // Add this line
+// @desc Show Update page
+// @route POST /student/:id
+router.post('/:id', ensureAuth, upload.single('image'), async (req, res) => {
     try {
         let student = await Student.findById(req.params.id).lean();
 
         if (!student) {
+            console.log('Student not found');
             return res.render('error/404');
         }
 
-        if (student.user.toString() !== req.user.id) {
-            return res.redirect('/student');
+        if (String(student.user) !== req.user.id) {
+            console.log('User not authorized');
+            return res.redirect('/students');
         }
 
         const file = req.file;
@@ -155,7 +170,6 @@ router.put('/:id', ensureAuth, upload.single('image'), async (req, res) => {
                 imageBase64: encode_image,
             };
         } else {
-            // Retain the existing image if no new image is provided
             updatedFields = {
                 ...updatedFields,
                 contentType: student.contentType,
@@ -163,13 +177,15 @@ router.put('/:id', ensureAuth, upload.single('image'), async (req, res) => {
             };
         }
 
+        // Use await here
         student = await Student.findOneAndUpdate(
             { _id: req.params.id },
             updatedFields,
             { new: true, runValidators: true }
         );
 
-        res.redirect('/student');
+        console.log('Student updated successfully');
+        res.redirect('/students');
     } catch (err) {
         console.error(err);
         return res.render('error/500');
@@ -189,11 +205,13 @@ router.delete('/:id', ensureAuth, async (req, res) => {
         }
 
         if (student.user != req.user.id) {
-            res.redirect('/student');
+            res.redirect('/students');
         } else {
             await Student.deleteOne({ _id: req.params.id });
-            res.redirect('/student');
+            res.redirect('/students');
         }
+        console.log("Student Deleted Successfully !");
+
     } catch (err) {
         console.error(err);
         return res.render('error/500');
@@ -206,13 +224,12 @@ router.delete('/:id', ensureAuth, async (req, res) => {
 // @route GET /student/user/:userId
 router.get('/user/:userId', ensureAuth, async (req, res) => {
     try {
-        const students = await Student.find({
+        const student = await Student.find({
             user: req.params.userId,
-            status: 'Paid',
         }).populate('user').lean();
 
         res.render('student/index', {
-            students,
+            student,
         });
     } catch (err) {
         console.error(err);
@@ -220,15 +237,18 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
     }
 });
 
+
+
 //@desc Search student by title
 //@route GET /student/search/:query
 router.get('/search/:query', ensureAuth, async (req, res) => {
     try {
-        const students = await Student.find({ name: new RegExp(req.query.query, 'i'), status: 'Paid' })
+        const student = await Student.find({ name: new RegExp(req.query.query, 'i') })
             .populate('user')
             .sort({ createdAt: 'desc' })
             .lean();
-        res.render('student/index', { students });
+        res.render('student/index', { student });
+        console.log("Search is working !");
     } catch (err) {
         console.log(err);
         res.render('error/404');
@@ -236,4 +256,4 @@ router.get('/search/:query', ensureAuth, async (req, res) => {
 });
 
 
-module.exports = router
+module.exports = router;

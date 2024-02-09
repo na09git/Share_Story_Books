@@ -1,24 +1,24 @@
 const express = require('express')
 const router = express.Router()
-const { ensureAuth } = require('../middleware/auth')
 const multer = require('multer');
-const mongoose = require('mongoose');
+const fs = require('fs');
+const { ensureAuth } = require('../middleware/auth')
 
 const News = require('../models/News')
 
 
-// image Upload // Set up multer storage
+// Set up multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "./uploadsnews")
+        cb(null, 'uploadsnews');
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + file.originalname + '-' + Date.now())
+        var ext = file.originalname.substr(file.originalname.lastIndexOf('.'));
+        cb(null, file.fieldname + '-' + Date.now() + ext);
     }
-})
-// Create multer instance
-const upload = multer({ storage: storage }).single('image')
+});
 
+const upload = multer({ storage: storage });
 
 // @desc    Show create page
 // @route   GET /news/create
@@ -27,38 +27,63 @@ router.get('/create', ensureAuth, (req, res) => {
 })
 
 
-// @desc    Process create news form
-// @route   POST /news
-router.post('/', ensureAuth, upload, async (req, res) => {
+
+// @desc Process add News  form with image upload
+// @route POST /news
+router.post('/', ensureAuth, upload.single('image'), async (req, res) => {
     try {
-        req.body.user = req.user.id
-        if (req.file) {
-            req.body.image = {
-                data: req.file.buffer,
-                contentType: req.file.mimetype
-            }
+        const file = req.file;
+
+        if (!file || file.length === 0) {
+            const error = new Error('Please choose files');
+            error.httpStatusCode = 400;
+            throw error;
         }
-        await News.create(req.body)
-        res.redirect('/news')
+
+        const img = fs.readFileSync(file.path);
+        const encode_image = img.toString('base64');
+
+        const newUpload = new News({
+            ...req.body,
+            user: req.user.id,
+            contentType: file.mimetype,
+            imageBase64: encode_image,
+        });
+
+        try {
+            await newUpload.save();
+            res.redirect('/news');
+            console.log("New News with image/upload is Successfully  Broadcasted !");
+
+        } catch (error) {
+            if (error.name === 'MongoError' && error.code === 11000) {
+                return res.status(400).json({ error: `Duplicate ${file.originalname}. File Already exists! ` });
+            }
+            return res.status(500).json({ error: error.message || `Cannot Upload ${file.originalname} Something Missing!` });
+        }
     } catch (err) {
-        console.error(err)
-        res.render('error/500')
+        console.error(err);
+        res.status(400).json({ error: err.message || 'Internal Server Error' });
     }
-})
+});
+
 
 
 // @desc    Show all news
 // @route   GET /news
 router.get('/', ensureAuth, async (req, res) => {
     try {
-        const news = await News.find({ status: 'public' })
+        const news = await News.find()
             .populate('user')
-            .sort({ createdAt: 1 })
+            .sort({ createdAt: -1 })
             .lean()
 
         res.render('news/index', {
             news,
         })
+        console.log("News/index rendered");
+
+        console.log("You can now see All News Here !");
     } catch (err) {
         console.error(err)
         res.render('error/500')
@@ -78,12 +103,13 @@ router.get('/:id', ensureAuth, async (req, res) => {
             return res.render('error/404')
         }
 
-        if (news.user._id != req.user.id && news.status == 'private') {
+        if (news.user._id != req.user.id) {
             res.render('error/404')
         } else {
             res.render('news/show', {
                 news,
             })
+            console.log("You can now see the news details");
         }
     } catch (err) {
         console.error(err)
@@ -95,9 +121,7 @@ router.get('/:id', ensureAuth, async (req, res) => {
 // @route   GET /news/edit/:id
 router.get('/edit/:id', ensureAuth, async (req, res) => {
     try {
-        const news = await News.findOne({
-            _id: req.params.id,
-        }).lean()
+        const news = await News.findOne({ _id: req.params.id }).lean()
 
         if (!news) {
             return res.render('error/404')
@@ -109,6 +133,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
             res.render('news/edit', {
                 news,
             })
+            console.log("You are in news edit page & can Edit this news");
         }
     } catch (err) {
         console.error(err)
@@ -117,31 +142,60 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
 })
 
 
-// @desc    Update news
-// @route   PUT /news/:id
-router.put('/:id', ensureAuth, async (req, res) => {
+
+// @desc Show Update page
+// @route POST /news/:id
+router.post('/:id', ensureAuth, upload.single('image'), async (req, res) => {
     try {
-        let news = await News.findById(req.params.id).lean()
+        let news = await News.findById(req.params.id).lean();
 
         if (!news) {
-            return res.render('error/404')
+            console.log('News not found');
+            return res.render('error/404');
         }
 
-        if (news.user != req.user.id) {
-            res.redirect('/news')
+        if (String(news.user) !== req.user.id) {
+            console.log('User not authorized');
+            return res.redirect('/newss');
+        }
+
+        const file = req.file;
+        const existingImage = news.imageBase64;
+
+        let updatedFields = req.body;
+
+        if (file) {
+            const img = fs.readFileSync(file.path);
+            const encode_image = img.toString('base64');
+            updatedFields = {
+                ...updatedFields,
+                contentType: file.mimetype,
+                imageBase64: encode_image,
+            };
         } else {
-            news = await News.findOneAndUpdate({ _id: req.params.id }, req.body, {
-                new: true,
-                runValidators: true,
-            })
-
-            res.redirect('/newspage')
+            updatedFields = {
+                ...updatedFields,
+                contentType: news.contentType,
+                imageBase64: existingImage,
+            };
         }
+
+        // Use await here
+        news = await News.findOneAndUpdate(
+            { _id: req.params.id },
+            updatedFields,
+            { new: true, runValidators: true }
+        );
+
+        console.log('News updated successfully');
+        res.redirect('/news');
     } catch (err) {
-        console.error(err)
-        return res.render('error/500')
+        console.error(err);
+        return res.render('error/500');
     }
-})
+});
+
+
 
 
 // @desc    Delete news
@@ -160,6 +214,8 @@ router.delete('/:id', ensureAuth, async (req, res) => {
             await News.deleteOne({ _id: req.params.id })
             res.redirect('/newspage')
         }
+        console.log("News Deleted Successfully !");
+
     } catch (err) {
         console.error(err)
         return res.render('error/500')
@@ -171,10 +227,7 @@ router.delete('/:id', ensureAuth, async (req, res) => {
 // @route   GET /news/user/:userId
 router.get('/user/:userId', ensureAuth, async (req, res) => {
     try {
-        const news = await News.find({
-            user: req.params.userId,
-            status: 'public',
-        })
+        const news = await News.find({ user: req.params.userId, })
             .populate('user')
             .lean()
 
@@ -191,11 +244,14 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
 //@route GET /news/search/:query
 router.get('/search/:query', ensureAuth, async (req, res) => {
     try {
-        const news = await News.find({ title: new RegExp(req.query.query, 'i'), status: 'public' })
+        const news = await News.find({ title: new RegExp(req.query.query, 'i'), })
             .populate('user')
             .sort({ createdAt: 'desc' })
             .lean()
-        res.render('news/index', { news })
+        res.render('news/index', {
+            news,
+        })
+        console.log("Search is working !");
     } catch (err) {
         console.log(err)
         res.render('error/404')

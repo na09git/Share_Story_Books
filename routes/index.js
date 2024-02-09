@@ -19,14 +19,14 @@ router.get('/login', ensureGuest, (req, res) => {
 })
 
 
-// @desc    Dashboard
-// @route   GET /dashboard
-router.get('/dashboard', ensureAuth, async (req, res) => {
+// @desc    stories
+// @route   GET /stories
+router.get('/stories', ensureAuth, async (req, res) => {
   try {
-    const stories = await Story.find({ user: req.user.id }).lean()
-    res.render('dashboard', {
+    const story = await Story.find({ user: req.user.id }).lean()
+    res.render('stories', {
       name: req.user.firstName,
-      stories,
+      story,
     })
   } catch (err) {
     console.error(err)
@@ -73,10 +73,10 @@ router.get('/contact', (req, res) => {
 
 // @desc    Student
 // @route   GET /student
-router.get('/student', ensureAuth, async (req, res) => {
+router.get('/students', ensureAuth, async (req, res) => {
   try {
     const student = await Student.find({ user: req.user.id }).lean()
-    res.render('student', {
+    res.render('students', {
       name: req.user.firstName,
       student,
     })
@@ -89,10 +89,10 @@ router.get('/student', ensureAuth, async (req, res) => {
 
 // @desc    Worker
 // @route   GET /worker
-router.get('/worker', ensureAuth, async (req, res) => {
+router.get('/workers', ensureAuth, async (req, res) => {
   try {
     const worker = await Worker.find({ user: req.user.id }).lean()
-    res.render('worker', {
+    res.render('workers', {
       name: req.user.firstName,
       worker,
     })
@@ -105,10 +105,10 @@ router.get('/worker', ensureAuth, async (req, res) => {
 
 // @desc    Problem
 // @route   GET /problem
-router.get('/problempage', ensureAuth, async (req, res) => {
+router.get('/problems', ensureAuth, async (req, res) => {
   try {
     const problem = await Problem.find({ user: req.user.id }).lean()
-    res.render('problempage', {
+    res.render('problems', {
       name: req.user.firstName,
       problem,
     })
@@ -121,9 +121,9 @@ router.get('/problempage', ensureAuth, async (req, res) => {
 
 // @desc    amirdetail
 // @route   GET /amirdetail
-router.get('/amirdetail', (req, res) => {
+router.get('/amirmessage', (req, res) => {
   try {
-    res.render('amirdetail')
+    res.render('amirmessage')
   } catch (err) {
     console.error(err)
     res.render('error/500')
@@ -131,4 +131,14 @@ router.get('/amirdetail', (req, res) => {
 })
 
 
+// @desc    vission-and-mission
+// @route   GET /vission-and-mission
+router.get('/vission-and-mission', (req, res) => {
+  try {
+    res.render('vission-and-mission')
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+})
 module.exports = router

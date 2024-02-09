@@ -1,79 +1,77 @@
-const path = require('path');
-const express = require('express')
-const { ensureAuth } = require('../middleware/auth')
+const express = require('express');
+const router = express.Router();
 const multer = require('multer');
-const mongoose = require('mongoose');
-const router = express.Router()
+const fs = require('fs');
+const { ensureAuth } = require('../middleware/auth');
 
+const Worker = require('../models/Worker');
 
-const Worker = require('../models/Worker')
-
-
-// image Upload // Set up multer storage
+// Set up multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploadworker')
+        cb(null, 'uploadworker');
     },
     filename: function (req, file, cb) {
-        cb(null, path.extname(file.originalname) + Date.now())
+        var ext = file.originalname.substr(file.originalname.lastIndexOf('.'));
+        cb(null, file.fieldname + '-' + Date.now() + ext);
     }
-})
+});
 
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: '1000000' },
-    fileFilter: (req, file, cb) => {
-        const fileTypes = /jpeg|jpg|png|gif/
-        const mimeType = fileTypes.test(file.mimetype)
-        const extname = fileTypes.test(path.extname(file.originalname))
-
-        if (mimeType && extname) {
-            return cb(null, true)
-        }
-        cb('Give Proper files formate to upload')
-    }
-}).single('image')
-
-// Create multer instance
+const upload = multer({ storage: storage });
 
 
-// @desc    Show addworker page
-// @route   GET /worker/addworker
+// @desc Show add worker page
+// @route GET /worker/addworker
 router.get('/addworker', ensureAuth, (req, res) => {
-    res.render('worker/addworker', { title: "Worker Page" })
-})
+    res.render('worker/addworker', { title: 'Worker Page' });
+});
 
 
-// @desc    Process add member form
-// @route   POST /workers
-router.post('/', ensureAuth, upload, async (req, res) => {
+// @desc Process add worker form with image upload
+// @route POST /worker
+router.post('/', ensureAuth, upload.single('image'), async (req, res) => {
     try {
-        req.body.user = req.user.id
-        if (req.file) {
-            req.body.image = {
-                data: req.file.buffer,
-                contentType: req.file.mimetype
-            }
+        const file = req.file;
+
+        if (!file || file.length === 0) {
+            const error = new Error('Please choose files');
+            error.httpStatusCode = 400;
+            throw error;
         }
-        await Worker.create(req.body)
-        res.redirect('/worker')
-        req.session.message = {
-            type: "success",
-            message: "User Added Successfully!"
+
+        const img = fs.readFileSync(file.path);
+        const encode_image = img.toString('base64');
+
+        const newUpload = new Worker({
+            ...req.body,
+            user: req.user.id,
+            contentType: file.mimetype,
+            imageBase64: encode_image,
+        });
+
+        try {
+            await newUpload.save();
+            res.redirect('/workers');
+        } catch (error) {
+            if (error.name === 'MongoError' && error.code === 11000) {
+                return res.status(400).json({ error: `Duplicate ${file.originalname}. File Already exists! ` });
+            }
+            return res.status(500).json({ error: error.message || `Cannot Upload ${file.originalname} Something Missing!` });
         }
     } catch (err) {
-        console.error(err)
-        res.render('error/500')
+        console.error(err);
+        res.status(400).json({ error: err.message || 'Internal Server Error' });
     }
-})
+});
 
-// @desc    Show all workers who 
-// @route   GET /workers
-router.get('/', ensureAuth, upload, async (req, res) => {
+
+// @desc Show all workers
+// @route GET /worker/index
+router.get('/', ensureAuth, async (req, res) => {
     try {
-        const worker = await Worker.find({ status: 'Paid' })
+        const worker = await Worker.find()
             .populate('user')
-            .sort({ createdAt: 1 })
+            .sort({ createdAt: -1 })
             .lean();
 
         res.render('worker/index', {
@@ -86,10 +84,9 @@ router.get('/', ensureAuth, upload, async (req, res) => {
 });
 
 
-
 // @desc    Show single worker
 // @route   GET /worker/:id
-router.get('/:id', ensureAuth, upload, async (req, res) => {
+router.get('/:id', ensureAuth, async (req, res) => {
     try {
         let worker = await Worker.findById(req.params.id)
             .populate('user')
@@ -99,7 +96,7 @@ router.get('/:id', ensureAuth, upload, async (req, res) => {
             return res.render('error/404')
         }
 
-        if (worker.user._id != req.user.id && worker.status == 'Paid') {
+        if (worker.user._id != req.user.id) {
             res.render('error/404')
         } else {
             res.render('worker/show', {
@@ -114,118 +111,139 @@ router.get('/:id', ensureAuth, upload, async (req, res) => {
 
 
 
-// @desc    Show edit page
-// @route   GET /worker/edit/:id
-router.get('/edit/:id', ensureAuth, upload, async (req, res) => {
+// @desc Show edit page
+// @route GET /worker/edit/:id
+router.get('/edit/:id', ensureAuth, async (req, res) => {
     try {
-        const worker = await Worker.findOne({
-            _id: req.params.id,
-        }).lean()
+        const worker = await Worker.findById(req.params.id).lean();
 
         if (!worker) {
-            return res.render('error/404')
+            return res.render('error/404');
         }
 
-        if (worker.user != req.user.id) {
-            res.redirect('/worker')
-        } else {
-            res.render('worker/edit', {
-                worker,
-            })
+        if (worker.user.toString() !== req.user.id) {
+            return res.redirect('/workers');
         }
+
+        res.render('worker/edit', { worker });
     } catch (err) {
-        console.error(err)
-        return res.render('error/500')
+        console.error(err);
+        return res.render('error/500');
     }
-})
+});
 
 
-
-// @desc    Update worker
-// @route   PUT /worker/:id
-router.put('/:id', ensureAuth, upload, async (req, res) => {
+// @desc Show Update page
+// @route POST /worker/:id
+router.post('/:id', ensureAuth, upload.single('image'), async (req, res) => {
     try {
-        let worker = await Worker.findById(req.params.id).lean()
+        let worker = await Worker.findById(req.params.id).lean();
 
         if (!worker) {
-            return res.render('error/404')
+            console.log('worker not found');
+            return res.render('error/404');
         }
 
-        if (worker.user != req.user.id) {
-            res.redirect('/worker')
+        if (String(worker.user) !== req.user.id) {
+            console.log('User not authorized');
+            return res.redirect('/workers');
+        }
+
+        const file = req.file;
+        const existingImage = worker.imageBase64;
+
+        let updatedFields = req.body;
+
+        if (file) {
+            const img = fs.readFileSync(file.path);
+            const encode_image = img.toString('base64');
+            updatedFields = {
+                ...updatedFields,
+                contentType: file.mimetype,
+                imageBase64: encode_image,
+            };
         } else {
-            worker = await Worker.findOneAndUpdate({ _id: req.params.id }, req.body, {
-                worker: true,
-                runValidators: true,
-            })
-
-            res.redirect('/worker')
+            updatedFields = {
+                ...updatedFields,
+                contentType: worker.contentType,
+                imageBase64: existingImage,
+            };
         }
+
+        // Use await here
+        worker = await Worker.findOneAndUpdate(
+            { _id: req.params.id },
+            updatedFields,
+            { new: true, runValidators: true }
+        );
+
+        console.log('worker updated successfully');
+        res.redirect('/workers');
     } catch (err) {
-        console.error(err)
-        return res.render('error/500')
+        console.error(err);
+        return res.render('error/500');
     }
-})
+});
 
 
-// @desc    Delete worker
-// @route   DELETE /worker/:id
+
+// @desc Delete worker
+// @route DELETE /worker/:id
 router.delete('/:id', ensureAuth, async (req, res) => {
     try {
-        let worker = await Worker.findById(req.params.id).lean()
+        let worker = await Worker.findById(req.params.id).lean();
 
         if (!worker) {
-            return res.render('error/404')
+            return res.render('error/404');
         }
 
         if (worker.user != req.user.id) {
-            res.redirect('/worker')
+            res.redirect('/workers');
         } else {
-            await Worker.deleteOne({ _id: req.params.id })
-            res.redirect('/worker')
+            await Worker.deleteOne({ _id: req.params.id });
+            res.redirect('/workers');
         }
     } catch (err) {
-        console.error(err)
-        return res.render('error/500')
+        console.error(err);
+        return res.render('error/500');
     }
-})
+});
 
 
 
-// @desc    User worker
-// @route   GET /worker/user/:userId
-router.get('/user/:userId', ensureAuth, upload, async (req, res) => {
+// @desc User worker
+// @route GET /worker/user/:userId
+router.get('/user/:userId', ensureAuth, async (req, res) => {
     try {
         const worker = await Worker.find({
             user: req.params.userId,
-            status: 'Paid',
-        })
-            .populate('user')
-            .lean()
+        }).populate('user').lean();
 
         res.render('worker/index', {
             worker,
-        })
+        });
     } catch (err) {
-        console.error(err)
-        res.render('error/500')
+        console.error(err);
+        res.render('error/500');
     }
-})
+});
+
 
 
 //@desc Search worker by title
 //@route GET /worker/search/:query
 router.get('/search/:query', ensureAuth, async (req, res) => {
     try {
-        const worker = await Worker.find({ title: new RegExp(req.query.query, 'i'), status: 'public' })
+        const worker = await Worker.find({ name: new RegExp(req.query.query, 'i') })
             .populate('user')
             .sort({ createdAt: 'desc' })
-            .lean()
-        res.render('worker/index', { news })
+            .lean();
+        res.render('worker/index', { worker });
     } catch (err) {
-        console.log(err)
-        res.render('error/404')
+        console.log(err);
+        res.render('error/404');
     }
-})
+});
 
-module.exports = router
+
+module.exports = router;
